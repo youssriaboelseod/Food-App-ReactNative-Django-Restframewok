@@ -11,7 +11,12 @@ import {
     createBottomTabNavigator,
     BottomTabBar
 } from "@react-navigation/bottom-tabs";
-import { icons } from "../contants";
+import {
+    homeIcon,
+    searchIcon,
+    likeIcon,
+    userIcon
+} from "../contants";
 
 const Tab = createBottomTabNavigator();
 
@@ -19,32 +24,66 @@ const Tabs = () => {
     return(
         <Tab.Navigator
             tabBarOptions = {{
-                showLabel: false
+                showLabel: false,
             }}
+
+            style = {styles.tabBottom}
+
+            screenOptions={({ route }) => ({
+                tabBarIcon: ({ focused, color, size }) => {
+                    let iconName;
+                    if (route.name === 'Home') {
+                        iconName  = homeIcon;
+                    } else if (route.name === 'Search') {
+                        iconName = searchIcon;
+                    } else if (route.name === 'Like') {
+                        iconName = likeIcon;
+                    } else if (route.name === 'User') {
+                        iconName = userIcon;
+                    }
+                    return <Image source = { iconName } style = {styles.tabIcon} />;
+                },
+                tabBarActiveTintColor: 'tomato',
+                tabBarInactiveTintColor: 'gray',
+            })}
         >
             <Tab.Screen
                 name = "Home"
                 component = {Home}
-                option = {{
-                    tabBarIcon: ({focused}) => {
-                        <Image
-                            source = { icons.home }
-                            resizeMode = "contain"
-                            style = {styles.image}
-                        />
-                    }
-                }}
+                options={{header: () => null}}
             >
-
+            </Tab.Screen>
+            <Tab.Screen
+                name = "Search"
+                component = {Home}
+                options={{header: () => null}}
+            >
+            </Tab.Screen>
+            <Tab.Screen
+                name = "Like"
+                component = {Home}
+                options={{header: () => null}}
+            >
+            </Tab.Screen>
+            <Tab.Screen
+                name = "User"
+                component = {Home}
+                options={{header: () => null}}
+            >
             </Tab.Screen>
         </Tab.Navigator>
     );
 }
 
 const styles = StyleSheet.create({
-    image: {
-        width: 25,
-        height: 25,
+    tabIcon: {
+        width: 30,
+        height: 30
+    },
+    tabBottom: {
+        backgroundColor: "transparent",
+        borderTopWidth: 0,
+        elevation: 0
     }
 });
 
