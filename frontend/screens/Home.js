@@ -7,12 +7,27 @@ import {
     SafeAreaView,
     FlatList,
     TouchableOpacity,
-    Image
+    Image,
+    Alert
 } from "react-native";
 import {
     locationIcon,
     cartIcon
 } from '../contants';
+
+const displayAlert = (message) => {
+    Alert.alert(
+        "Notification",
+        message,
+        [
+            {
+            text: "Cancel",
+            onPress: () => console.log("Cancel Pressed"),
+            style: "cancel"
+            },
+            { text: "OK", onPress: () => console.log("OK Pressed") }
+        ])
+}
 
 class Home extends Component {
     constructor(props) {
@@ -30,8 +45,10 @@ class Home extends Component {
                     this.setState({
                         categories: [...response.data]
                     })
-                    console.log(this.state.categories);
+                }else {
+                    displayAlert('There are somthing with our server. Please try later !');
                 }
+
             })
             .catch((error) => {
                 console.log(error);
