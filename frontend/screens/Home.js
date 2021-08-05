@@ -17,6 +17,9 @@ import {
 class Home extends Component {
     constructor(props) {
         super(props);
+        this.state = {
+            categories: ['Mì', 'Cơm', '', '', '', '', '', '', '']
+        }
     }
 
     renderHeader() {
@@ -67,10 +70,51 @@ class Home extends Component {
         );
     }
 
+    renderMainCategories() {
+        const renderItem = () => {
+            return(
+                <TouchableOpacity style = {styles.catgoryItems}>
+                    <View style = {styles.categoriesImage}>
+                        <Image
+                            source = {locationIcon}
+                            resizeMode = 'contain'
+                            style = {{
+                                height: 25,
+                                width: 25
+                            }}
+                        ></Image>
+                    </View>
+                    <Text style = {{
+                        marginTop: 10,
+                        color: "#FFF",
+                        fontSize: 15,
+                        paddingBottom: 0
+                    }}>Category</Text>
+                </TouchableOpacity>
+            );
+        }
+        return(
+            <View style = {styles.categoriesWrapper}>
+                <Text style = {styles.textCategories}>Main</Text>
+                <Text style = {styles.textCategories}>Categories</Text>
+                <FlatList 
+                    data = {this.state.categories}
+                    horizontal
+                    showsHorizontalScrollIndicator = {false}
+                    keyExtractor = {item => `${item.id}`}
+                    renderItem = {renderItem}
+                    contentContainerStyle = {{padding: 10, marginTop: 15}}
+                />
+
+            </View>
+        );
+    }
+
     render() {
         return(
             <SafeAreaView style = {styles.container}>
                 {this.renderHeader()}
+                {this.renderMainCategories()}
             </SafeAreaView>
         );
     }
@@ -108,6 +152,31 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         borderRadius: 10
+    },
+    categoriesWrapper: {
+        padding: 10,
+        margin: 10
+    },
+    textCategories: {
+        fontSize: 30,
+        fontWeight: 'bold'
+    },
+    catgoryItems: {
+        padding: 15,
+        paddingBottom: 30,
+        backgroundColor: '#ff7733',
+        borderRadius: 30,
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginRight: 15
+    },
+    categoriesImage: {
+        height: 58,
+        width: 55,
+        borderRadius: 25,
+        backgroundColor: "#FFF",
+        alignItems: 'center',
+        justifyContent: 'center'
     }
 });
 
