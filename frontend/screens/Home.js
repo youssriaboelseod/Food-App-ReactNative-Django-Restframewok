@@ -18,8 +18,34 @@ class Home extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            categories: ['Mì', 'Cơm', '', '', '', '', '', '', '']
+            categories: [
+                {
+                    id: '1',
+                    title: 'item'
+                },
+                {
+                    id: '2',
+                    title: 'item'
+                },
+                {
+                    id: '3',
+                    title: 'item'
+                },
+                {
+                    id: '4',
+                    title: 'item'
+                },
+                {
+                    id: '5',
+                    title: 'item'
+                },
+            ],
+            selectedId: '',
         }
+    }
+
+    onSelectCategory(item) {
+
     }
 
     renderHeader() {
@@ -71,9 +97,29 @@ class Home extends Component {
     }
 
     renderMainCategories() {
-        const renderItem = () => {
-            return(
-                <TouchableOpacity style = {styles.catgoryItems}>
+        const renderItem = ({item}) => {
+            backgroundColor = item.id === this.state.selectedId ? "#ff7733" : "#FFF";    
+            if (this.state.selectedId === '') {
+                backgroundColor = "#ff7733";
+            }        
+            return (
+                <TouchableOpacity 
+                    onPress = {() => {
+                        console.log(this.state.selectedId);
+                        this.setState({
+                            selectedId: item.id
+                        });
+                    }}
+                    style = {{
+                        padding: 15,
+                        paddingBottom: 30,
+                        backgroundColor: backgroundColor,
+                        borderRadius: 30,
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        marginRight: 15
+                    }}
+                >
                     <View style = {styles.categoriesImage}>
                         <Image
                             source = {locationIcon}
@@ -86,13 +132,14 @@ class Home extends Component {
                     </View>
                     <Text style = {{
                         marginTop: 10,
-                        color: "#FFF",
+                        color: "#000",
                         fontSize: 15,
                         paddingBottom: 0
                     }}>Category</Text>
                 </TouchableOpacity>
             );
         }
+
         return(
             <View style = {styles.categoriesWrapper}>
                 <Text style = {styles.textCategories}>Main</Text>
@@ -101,11 +148,11 @@ class Home extends Component {
                     data = {this.state.categories}
                     horizontal
                     showsHorizontalScrollIndicator = {false}
-                    keyExtractor = {item => `${item.id}`}
+                    keyExtractor = {(item) => item.id}
                     renderItem = {renderItem}
+                    extraData = {this.state.selectedId}
                     contentContainerStyle = {{padding: 10, marginTop: 15}}
                 />
-
             </View>
         );
     }
@@ -160,15 +207,6 @@ const styles = StyleSheet.create({
     textCategories: {
         fontSize: 30,
         fontWeight: 'bold'
-    },
-    catgoryItems: {
-        padding: 15,
-        paddingBottom: 30,
-        backgroundColor: '#ff7733',
-        borderRadius: 30,
-        alignItems: 'center',
-        justifyContent: 'center',
-        marginRight: 15
     },
     categoriesImage: {
         height: 58,
