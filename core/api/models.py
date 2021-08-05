@@ -77,16 +77,48 @@ class Category(models.Model):
         return str(self.name)
     
     
-# class Product(models.Model):
-#     name = models.CharField(max_length = 50, blank = True, null = False, unique = True)
-#     category = models.ForeignKey(Category, on_delete = models.CASCADE, related_name = 'category_product')
-#     is_available = models.BooleanField(default = True)
-#     price = models.DecimalField(max_digits = 8, decimal_places = 2)
-#     imgUrl = models.CharField(max_length = 255, null = True)
-#     created_date = models.DateTimeField(auto_now_add = True)
+class Product(models.Model):
+    name = models.CharField(max_length = 50, blank = True, null = False, unique = True)
+    category = models.ForeignKey(Category, on_delete = models.CASCADE, related_name = 'category_product')
+    is_available = models.BooleanField(default = True)
+    price = models.DecimalField(max_digits = 8, decimal_places = 2)
+    imgUrl = models.CharField(max_length = 255, null = True)
+    created_date = models.DateTimeField(auto_now_add = True)
     
-#     class Meta:
-#         ordering = ['is_available','-created_date']
+    class Meta:
+        ordering = ['is_available','-created_date']
         
-#     def __str__(self):
-#         return str(name)
+    def __str__(self):
+        return str(self.name)
+    
+    
+class Extra(models.Model):
+    product = models.ForeignKey(Product, on_delete = models.CASCADE, related_name = 'product_extras')
+    name = models.CharField(max_length = 50, blank = True, unique = True)
+    price = models.DecimalField(max_digits = 8, decimal_places = 2)
+    is_available = models.BooleanField(default = True)
+    created_at = models.DateTimeField(auto_now_add = True)
+    
+    def __str__(self):
+        return str(self.name)
+    
+    
+class Order(models.Model):
+    customer = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete = models.CASCADE)
+    created_at = models.DateTimeField(auto_now_add = True)
+    paid = models.BooleanField(default = False)
+    
+    def __str__(self):
+        return str(self.customer) + '-' + str(self.id)
+    
+    
+class OrderDetail(models.Model):
+    order = models.ForeignKey(Order, on_delete = models.CASCADE, related_name = 'order_detail')
+    product = models.ForeignKey(Product, on_delete = models.SET_NULL, null = True, related_name = 'order_products')
+    extra = models.ForeignKey(Extra, on_delete = models.SET_NULL, null = True, related_name = 'order_extras')
+    quantity = models.IntegerField(default = 1)
+    
+    def __str__(self):
+        return str(self.order.customer) + '-' + str(self.order.id) + '-' + str(self.product)
+    
+    
