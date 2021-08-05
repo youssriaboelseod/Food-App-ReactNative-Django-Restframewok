@@ -1,3 +1,4 @@
+import axios from 'axios';
 import React, {  Component } from "react";
 import {
     View,
@@ -8,7 +9,6 @@ import {
     TouchableOpacity,
     Image
 } from "react-native";
-
 import {
     locationIcon,
     cartIcon
@@ -18,34 +18,24 @@ class Home extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            categories: [
-                {
-                    id: '1',
-                    title: 'item'
-                },
-                {
-                    id: '2',
-                    title: 'item'
-                },
-                {
-                    id: '3',
-                    title: 'item'
-                },
-                {
-                    id: '4',
-                    title: 'item'
-                },
-                {
-                    id: '5',
-                    title: 'item'
-                },
-            ],
+            categories: [],
             selectedId: '',
         }
     }
 
-    onSelectCategory(item) {
-
+    componentDidMount() {
+        axios.get(`http://192.168.1.3:8000/api/list-categories/`)
+            .then((response) => {
+                if(response.status === 200) {
+                    this.setState({
+                        categories: [...response.data]
+                    })
+                    console.log(this.state.categories);
+                }
+            })
+            .catch((error) => {
+                console.log(error);
+            })
     }
 
     renderHeader() {
@@ -135,7 +125,7 @@ class Home extends Component {
                         color: "#000",
                         fontSize: 15,
                         paddingBottom: 0
-                    }}>Category</Text>
+                    }}>{item.name}</Text>
                 </TouchableOpacity>
             );
         }
