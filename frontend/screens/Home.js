@@ -63,7 +63,7 @@ class Home extends Component {
     }
 
     componentDidMount() {
-        axios.get( ipAddress + `list-categories/`)
+        axios.get( ipAddress + `/api/list-categories/`)
             .then((response) => {
                 if(response.status === 200) {
                     this.setState({
@@ -133,13 +133,22 @@ class Home extends Component {
                 style = {{
                     marginBottom: 20,
                     marginRight: 15,
-                    marginLeft: 15
+                    marginLeft: 15,
                 }}
             >
                 <View
                     style = {{
                         margin: 7,
-                        marginTop: 0
+                        marginTop: 0,
+                        shadowColor: "#000",
+                        shadowOffset: {
+                            width: 0,
+                            height: 3,
+                        },
+                        shadowOpacity: 0.27,
+                        shadowRadius: 4.65,
+
+                        elevation: 6,
                     }}
                 >
                     <Image
@@ -154,9 +163,17 @@ class Home extends Component {
                     <View style = {styles.productDuration}>
                         <Text style = {{
                             fontWeight: 'bold',
-                            
+                
                         }}>{item.duration} min</Text>
                     </View>
+                </View>
+                <View style = {{
+                    marginLeft: 10
+                }}>
+                    <Text style = {{
+                        fontSize: 20,
+                        fontWeight: 'bold'
+                    }}>{item.name}</Text>
                 </View>
                 {/* <Text>{item.id}</Text> */}
             </TouchableOpacity>
@@ -166,12 +183,10 @@ class Home extends Component {
                 flex: 1
             }}>
                 <FlatList
-                    // horizontal
                     data = {this.state.products}
                     showsHorizontalScrollIndicator = {false}
                     renderItem = {renderItems}
                     keyExtractor = {(item) => item.id}
-                    // contentContainerStyle = {{padding: 10, paddingBottom: 500}}
                 >
                 </FlatList>
             </View>
@@ -200,7 +215,16 @@ class Home extends Component {
                         borderRadius: 30,
                         alignItems: 'center',
                         justifyContent: 'center',
-                        marginRight: 15
+                        marginRight: 15,
+                        shadowColor: "#000",
+                        shadowOffset: {
+                            width: 0,
+                            height: 2,
+                        },
+                        shadowOpacity: 0.23,
+                        shadowRadius: 2.62,
+
+                        elevation: 4,
                     }}
                 >
                     <View style = {styles.categoriesImage}>
@@ -217,7 +241,7 @@ class Home extends Component {
                         marginTop: 10,
                         color: "#000",
                         fontSize: 15,
-                        paddingBottom: 0
+                        paddingBottom: 0,
                     }}>{item.name}</Text>
                 </TouchableOpacity>
             );
@@ -286,7 +310,7 @@ const styles = StyleSheet.create({
     },
     categoriesWrapper: {
         padding: 10,
-        margin: 10
+        margin: 10,
     },
     textCategories: {
         fontSize: 30,
@@ -298,7 +322,7 @@ const styles = StyleSheet.create({
         borderRadius: 25,
         backgroundColor: "#FFF",
         alignItems: 'center',
-        justifyContent: 'center'
+        justifyContent: 'center',
     },
     productDuration: {
         position: 'absolute',
@@ -308,7 +332,16 @@ const styles = StyleSheet.create({
         backgroundColor: '#FFF',
         borderTopRightRadius: 30,
         alignItems: 'center',
-        justifyContent: 'center'
+        justifyContent: 'center',
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 0,
+            height: 3,
+        },
+        shadowOpacity: 0.27,
+        shadowRadius: 4.65,
+
+        elevation: 6,
     }
 });
 

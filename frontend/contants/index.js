@@ -7,7 +7,7 @@ const locationIcon = require('../assets/icons/location-icon.png');
 const cartIcon = require('../assets/icons/cart-icon.png')
 
 //IP address
-const ipAddress = 'http://192.168.1.2:8000/api/';
+const ipAddress = 'http://192.168.1.2:8000';
 
 //Images
 const miXao = require('../assets/images/mixao.jpg');
