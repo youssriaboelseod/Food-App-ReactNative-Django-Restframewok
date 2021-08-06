@@ -84,6 +84,7 @@ class Product(models.Model):
     price = models.DecimalField(max_digits = 8, decimal_places = 2)
     imgUrl = models.CharField(max_length = 255, null = True)
     created_date = models.DateTimeField(auto_now_add = True)
+    duration = models.CharField(max_length = 20)
     
     class Meta:
         ordering = ['is_available','-created_date']

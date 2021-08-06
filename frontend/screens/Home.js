@@ -11,8 +11,12 @@ import {
     Alert
 } from "react-native";
 import {
+    miXao,
+    miXaoGion,
+    ipAddress,
     locationIcon,
-    cartIcon
+    cartIcon,
+    miQuang
 } from '../contants';
 
 const displayAlert = (message) => {
@@ -34,19 +38,39 @@ class Home extends Component {
         super(props);
         this.state = {
             categories: [],
+            products: [
+                {
+                    'id': 1,
+                    'name': 'Mì xào',
+                    'duration': 25,
+                    'url': miXao
+                },
+                {
+                    'id': 2,
+                    'name': 'Mì xào giòn',
+                    'duration': 30,
+                    'url': miXaoGion
+                },
+                {
+                    'id': 3,
+                    'name': 'Mì quản',
+                    'duration': 40,
+                    'url': miQuang
+                },
+            ],
             selectedId: '',
         }
     }
 
     componentDidMount() {
-        axios.get(`http://192.168.1.3:8000/api/list-categories/`)
+        axios.get( ipAddress + `list-categories/`)
             .then((response) => {
                 if(response.status === 200) {
                     this.setState({
                         categories: [...response.data]
                     })
                 }else {
-                    displayAlert('There are somthing with our server. Please try later !');
+                    displayAlert('There are problems with our server. Please try later !');
                 }
 
             })
@@ -100,6 +124,58 @@ class Home extends Component {
                     />
                 </TouchableOpacity>
             </View>
+        );
+    }
+
+    renderRestaurantList() {
+        const renderItems = ({item}) => (
+            <TouchableOpacity
+                style = {{
+                    marginBottom: 20,
+                    marginRight: 15,
+                    marginLeft: 15
+                }}
+            >
+                <View
+                    style = {{
+                        margin: 7,
+                        marginTop: 0
+                    }}
+                >
+                    <Image
+                        source = {item.url}
+                        resizeMode = 'cover'
+                        style = {{
+                            width: '100%',
+                            height: 120,
+                            borderRadius: 30
+                        }}
+                    ></Image>
+                    <View style = {styles.productDuration}>
+                        <Text style = {{
+                            fontWeight: 'bold',
+                            
+                        }}>{item.duration} min</Text>
+                    </View>
+                </View>
+                {/* <Text>{item.id}</Text> */}
+            </TouchableOpacity>
+        );
+        return(
+            <View style = {{
+                flex: 1
+            }}>
+                <FlatList
+                    // horizontal
+                    data = {this.state.products}
+                    showsHorizontalScrollIndicator = {false}
+                    renderItem = {renderItems}
+                    keyExtractor = {(item) => item.id}
+                    // contentContainerStyle = {{padding: 10, paddingBottom: 500}}
+                >
+                </FlatList>
+            </View>
+            
         );
     }
 
@@ -169,6 +245,7 @@ class Home extends Component {
             <SafeAreaView style = {styles.container}>
                 {this.renderHeader()}
                 {this.renderMainCategories()}
+                {this.renderRestaurantList()}
             </SafeAreaView>
         );
     }
@@ -220,6 +297,16 @@ const styles = StyleSheet.create({
         width: 55,
         borderRadius: 25,
         backgroundColor: "#FFF",
+        alignItems: 'center',
+        justifyContent: 'center'
+    },
+    productDuration: {
+        position: 'absolute',
+        bottom: 0,
+        height: 40,
+        width: 90,
+        backgroundColor: '#FFF',
+        borderTopRightRadius: 30,
         alignItems: 'center',
         justifyContent: 'center'
     }
