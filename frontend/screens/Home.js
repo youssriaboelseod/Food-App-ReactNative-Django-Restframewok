@@ -18,6 +18,7 @@ import {
     cartIcon,
     miQuang
 } from '../contants';
+import getImage from '../utils.js';
 
 const displayAlert = (message) => {
     Alert.alert(
@@ -175,7 +176,6 @@ class Home extends Component {
                         fontWeight: 'bold'
                     }}>{item.name}</Text>
                 </View>
-                {/* <Text>{item.id}</Text> */}
             </TouchableOpacity>
         );
         return(
@@ -200,10 +200,10 @@ class Home extends Component {
             if (this.state.selectedId === '') {
                 backgroundColor = "#ff7733";
             }        
+            imgUrl = getImage(item.name);
             return (
                 <TouchableOpacity 
                     onPress = {() => {
-                        console.log(this.state.selectedId);
                         this.setState({
                             selectedId: item.id
                         });
@@ -229,7 +229,7 @@ class Home extends Component {
                 >
                     <View style = {styles.categoriesImage}>
                         <Image
-                            source = {locationIcon}
+                            source = {imgUrl}
                             resizeMode = 'contain'
                             style = {{
                                 height: 25,

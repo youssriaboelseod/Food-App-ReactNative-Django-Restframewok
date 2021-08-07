@@ -5,6 +5,10 @@ const likeIcon = require('../assets/icons/heart-icon.png');
 const userIcon = require('../assets/icons/user-icon.png');
 const locationIcon = require('../assets/icons/location-icon.png');
 const cartIcon = require('../assets/icons/cart-icon.png')
+const riceIcon = require('../assets/icons/rice-icon.png');
+const noodleIcon = require('../assets/icons/noodle-icon.png');
+const hotpotIcon = require('../assets/icons/hotpot-icon.png');
+const friedfoodsIcon = require('../assets/icons/friedfoods-icon.png');
 
 //IP address
 const ipAddress = 'http://192.168.1.2:8000';
@@ -24,5 +28,9 @@ export {
     miXao,
     miXaoGion,
     miQuang,
+    riceIcon,
+    noodleIcon,
+    hotpotIcon,
+    friedfoodsIcon,
     ipAddress
 }
