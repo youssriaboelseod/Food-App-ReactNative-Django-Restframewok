@@ -39,27 +39,9 @@ class Home extends Component {
         super(props);
         this.state = {
             categories: [],
-            products: [
-                {
-                    'id': 1,
-                    'name': 'Mì xào',
-                    'duration': 25,
-                    'url': miXao
-                },
-                {
-                    'id': 2,
-                    'name': 'Mì xào giòn',
-                    'duration': 30,
-                    'url': miXaoGion
-                },
-                {
-                    'id': 3,
-                    'name': 'Mì quản',
-                    'duration': 40,
-                    'url': miQuang
-                },
-            ],
+            products: [],
             selectedId: '',
+            categoryNameSelected: ''
         }
     }
 
@@ -78,6 +60,26 @@ class Home extends Component {
             .catch((error) => {
                 console.log(error);
             })
+
+    }
+
+    getProductsCategory(categoryName) {
+        axios.post(ipAddress + `/api/category-products/`, {
+            "name": categoryName
+        })
+        .then((response) => {
+            if(response.status === 200) {
+                this.setState({
+                    products: [...response.data]
+                });
+            } else if(response.status === 404) {
+                console.log('Not found');
+            }
+        })
+        .catch((error) => {
+            console.log(error);
+        })
+            
     }
 
     renderHeader() {
@@ -153,7 +155,7 @@ class Home extends Component {
                     }}
                 >
                     <Image
-                        source = {item.url}
+                        source = {miQuang}
                         resizeMode = 'cover'
                         style = {{
                             width: '100%',
@@ -161,7 +163,7 @@ class Home extends Component {
                             borderRadius: 30
                         }}
                     ></Image>
-                    <View style = {styles.productDuration}>
+                    <View style = {styles.duration}>
                         <Text style = {{
                             fontWeight: 'bold',
                 
@@ -204,9 +206,11 @@ class Home extends Component {
             return (
                 <TouchableOpacity 
                     onPress = {() => {
+                        console.log(item.name);
                         this.setState({
-                            selectedId: item.id
+                            selectedId: item.id,
                         });
+                        this.getProductsCategory(item.name);
                     }}
                     style = {{
                         padding: 15,
