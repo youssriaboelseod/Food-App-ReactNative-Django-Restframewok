@@ -6,10 +6,12 @@ import {
     SafeAreaView,
     TouchableOpacity,
     Image,
-    Animated
+    Animated,
+    ImageStore
 } from "react-native";
 import {
-    backIcon
+    backIcon,
+    miXao
 } from '../contants';
 
 class Product extends Component {
@@ -25,6 +27,7 @@ class Product extends Component {
             <View style = {{flexDirection: 'row'}}>
                 <TouchableOpacity
                     style = {styles.iconBackWrapper}
+                    onPress={() => this.props.navigation.goBack()}
                 >
                     <Image
                         source = {backIcon}
@@ -33,7 +36,20 @@ class Product extends Component {
                     ></Image>
                 </TouchableOpacity>
             </View>
+        );
+    }
 
+    renderFoodInfor() {
+        return(
+            <View>
+                <View style = {styles.foodInforWrapper}>
+                    <Image 
+                        style = {styles.foodImage}
+                        source = {miXao}
+
+                    ></Image>
+                </View>
+            </View>
         );
     }
 
@@ -41,6 +57,7 @@ class Product extends Component {
         return(
             <SafeAreaView style = {styles.container}>
                 {this.renderHeader()}
+                {this.renderFoodInfor()}
             </SafeAreaView>
         );
     }
@@ -53,13 +70,20 @@ const styles = StyleSheet.create({
     },
     iconBackWrapper: {
         width: 50,
-        paddingLeft: 20,
+        paddingLeft: 10,
         marginTop: 20,
         justifyContent: 'center'
     },
     backIcon: {
         width: 30,
         height: 30
+    },
+    foodInforWrapper: {
+        marginTop: 10,
+        alignItems: 'center',
+        height: 100
+    },
+    foodImage: {
     }
 });
 
