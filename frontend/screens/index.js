@@ -1,9 +1,9 @@
 import Home from "./Home.js";
-import Restaurant from "./Restaurant.js";
+import Product from "./Product.js";
 import OrderDelivery from "./OrderDelivery.js";
 
 export {
     Home,
-    Restaurant,
+    Product,
     OrderDelivery
 }

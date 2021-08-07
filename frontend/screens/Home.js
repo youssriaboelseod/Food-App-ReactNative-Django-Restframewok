@@ -130,13 +130,18 @@ class Home extends Component {
         );
     }
 
-    renderRestaurantList() {
+    renderProductsList() {
         const renderItems = ({item}) => (
             <TouchableOpacity
                 style = {{
                     marginBottom: 20,
                     marginRight: 15,
                     marginLeft: 15,
+                }}
+                onPress = {() => {
+                    this.props.navigation.navigate('Product', {
+                        item: item,
+                    });
                 }}
             >
                 <View
@@ -206,7 +211,6 @@ class Home extends Component {
             return (
                 <TouchableOpacity 
                     onPress = {() => {
-                        console.log(item.name);
                         this.setState({
                             selectedId: item.id,
                         });
@@ -273,7 +277,7 @@ class Home extends Component {
             <SafeAreaView style = {styles.container}>
                 {this.renderHeader()}
                 {this.renderMainCategories()}
-                {this.renderRestaurantList()}
+                {this.renderProductsList()}
             </SafeAreaView>
         );
     }
