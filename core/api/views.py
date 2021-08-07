@@ -24,12 +24,16 @@ class ListProductsCategory(APIView):
     serializer_class = serializers.ProductSerializer
     
     def get_category_object(self, name = None):
-        return get_object_or_404(models.Category, name = name)
+        categoryInstances = models.Category.objects.filter(name = str(name))
+        if len(categoryInstances) > 0:
+            return categoryInstances[0]
+        return -1
     
     def post(self, request, format = None):
-        categoryName = self.request.get('name')
+        categoryName = self.request.data.get('name')
         categoryInstance = self.get_category_object(categoryName)
-        if categoryName:
+        if categoryName != -1:
+            print('Here')
             products = categoryInstance.category_product.all()
             print(products)
             serializer = self.serializer_class(products, many = True)
