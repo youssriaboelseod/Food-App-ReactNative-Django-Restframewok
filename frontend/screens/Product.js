@@ -18,7 +18,8 @@ class Product extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            item: this.props.route.params.item
+            item: this.props.route.params.item,
+            quantity: 1
         }
     }
 
@@ -48,7 +49,23 @@ class Product extends Component {
                         source = {miXao}
 
                     ></Image>
+                    <View style = {styles.quantityWrapper}>
+                        <TouchableOpacity style = {styles.decreaseButton}>
+                            <Text style = {styles.quantityText}>-</Text>
+                        </TouchableOpacity>
+                        <View style = {styles.quantityNumber}>
+                            <Text style = {{fontSize: 20, fontWeight: 'bold'}}>1</Text>
+                        </View>
+                        <TouchableOpacity style = {styles.increaseButton}>
+                            <Text style = {styles.quantityText}>+</Text>
+                        </TouchableOpacity>
+                    </View>
+                    <View style = {styles.fontNameWrapper}>
+                        <Text style = {styles.foodName}>Bún bò - 25 min</Text>
+                    </View>
                 </View>
+
+                
             </View>
         );
     }
@@ -72,7 +89,8 @@ const styles = StyleSheet.create({
         width: 50,
         paddingLeft: 10,
         marginTop: 20,
-        justifyContent: 'center'
+        justifyContent: 'center',
+        height: 30
     },
     backIcon: {
         width: 30,
@@ -84,6 +102,49 @@ const styles = StyleSheet.create({
         height: 100
     },
     foodImage: {
+        height: 240
+    },
+    quantityWrapper: {
+        position: 'absolute',
+        bottom: - 165,
+        height: 50,
+        width: 150,
+        justifyContent: 'center',
+        flexDirection: 'row',
+    },
+    decreaseButton: {
+        width: 50,
+        backgroundColor: '#FFF',
+        alignItems: 'center',
+        justifyContent: 'center',
+        borderTopLeftRadius: 25,
+        borderBottomLeftRadius: 25,
+    },
+    quantityText: {
+        fontSize: 25,
+    },
+    quantityNumber: {
+        width: 50,
+        backgroundColor: '#FFF',
+        alignItems: 'center',
+        justifyContent: 'center'
+    },
+    increaseButton: {
+        width: 50,
+        backgroundColor: '#FFF',
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderTopRightRadius: 25,
+        borderBottomRightRadius: 25
+    },
+    fontNameWrapper: {
+        alignItems: 'center',
+        marginTop: 30,
+        // flex: 1
+    },
+    foodName: {
+        fontSize: 20,
+        fontWeight: 'bold'
     }
 });
 
