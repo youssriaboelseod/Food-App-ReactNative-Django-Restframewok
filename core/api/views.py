@@ -33,7 +33,6 @@ class ListProductsCategory(APIView):
         categoryName = self.request.data.get('name')
         categoryInstance = self.get_category_object(categoryName)
         if categoryName != -1:
-            print('Here')
             products = categoryInstance.category_product.all()
             print(products)
             serializer = self.serializer_class(products, many = True)
