@@ -23,6 +23,21 @@ class Product extends Component {
         }
     }
 
+    changeQuantity = (status) => {
+        if(status === 1) {
+            this.setState({
+                quantity: this.state.quantity + 1
+            });
+        }
+        else {
+            if(this.state.quantity > 1) {
+                this.setState({
+                    quantity: this.state.quantity - 1
+                });
+            }
+        }
+    }
+
     renderHeader() {
         return(
             <View style = {{flexDirection: 'row'}}>
@@ -50,13 +65,23 @@ class Product extends Component {
 
                     ></Image>
                     <View style = {styles.quantityWrapper}>
-                        <TouchableOpacity style = {styles.decreaseButton}>
+                        <TouchableOpacity 
+                            style = {styles.decreaseButton}
+                            onPress = {() => {
+                                this.changeQuantity(0);
+                            }}
+                        >
                             <Text style = {styles.quantityText}>-</Text>
                         </TouchableOpacity>
                         <View style = {styles.quantityNumber}>
-                            <Text style = {{fontSize: 20, fontWeight: 'bold'}}>1</Text>
+                            <Text style = {{fontSize: 20, fontWeight: 'bold'}}>{this.state.quantity}</Text>
                         </View>
-                        <TouchableOpacity style = {styles.increaseButton}>
+                        <TouchableOpacity 
+                            style = {styles.increaseButton}
+                            onPress = {() => {
+                                this.changeQuantity(1);
+                            }}
+                        >
                             <Text style = {styles.quantityText}>+</Text>
                         </TouchableOpacity>
                     </View>

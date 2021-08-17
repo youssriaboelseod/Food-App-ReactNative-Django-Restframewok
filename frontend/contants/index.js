@@ -12,7 +12,7 @@ const friedfoodsIcon = require('../assets/icons/friedfoods-icon.png');
 const backIcon = require('../assets/icons/back-icon.png');
 
 //IP address
-const ipAddress = 'http://192.168.1.2:8000';
+const ipAddress = 'http://192.168.1.4:8000';
 
 //Images
 const miXao = require('../assets/images/mixao.jpg');
