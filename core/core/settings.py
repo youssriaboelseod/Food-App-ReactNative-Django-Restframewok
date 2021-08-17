@@ -145,7 +145,7 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static')
 ]
 
-# AUTH_USER_MODEL = 'api.Customer'
+AUTH_USER_MODEL = 'api.Customer'
 
 MEDIA_URL = '/images/'
 
