@@ -1,3 +1,4 @@
+import axios from "axios";
 import React, {  Component } from "react";
 import {
     View,
@@ -11,8 +12,23 @@ import {
 } from "react-native";
 import {
     backIcon,
-    miXao
+    miXao,
+    ipAddress
 } from '../contants';
+
+const displayAlert = (message) => {
+    Alert.alert(
+        "Notification",
+        message,
+        [
+            {
+            text: "Cancel",
+            onPress: () => console.log("Cancel Pressed"),
+            style: "cancel"
+            },
+            { text: "OK", onPress: () => console.log("OK Pressed") }
+        ])
+}
 
 class Product extends Component {
     constructor(props) {
@@ -23,6 +39,17 @@ class Product extends Component {
         }
     }
 
+    componentDidMount() {
+        axios.get(`${ipAddress}/api/detail-category-product?name=${this.state.item.name}`)
+            .then((response) => {
+                this.setState({
+                    item: response.data
+                });
+            })
+            .catch((error) => {
+                displayAlert(error);
+            });
+    }
 
     changeQuantity = (status) => {
         if(status === 1) {
@@ -37,6 +64,10 @@ class Product extends Component {
                 });
             }
         }
+    }
+
+    orderButtonPressedHandler = () => {
+        
     }
 
     renderHeader() {
@@ -87,14 +118,19 @@ class Product extends Component {
                         </TouchableOpacity>
                     </View>
                     <View style = {styles.fontNameWrapper}>
-                        <Text style = {styles.foodName}>Bún bò - 25 min</Text>
+                        <Text style = {styles.foodName}>{this.state.item.name} - {this.state.item.duration}m</Text>
                     </View>
                     <View style = {styles.discriptionWrapper}>
-                        <Text style = {styles.discriptionText}>Discription</Text>
+                        <Text style = {styles.discriptionText}>{this.state.item.description}</Text>
                     </View>
                     <View style = {styles.orderWrapper}>
                         <Text style = {styles.priceNumber}>20.000đ</Text>
-                        <TouchableOpacity style = {styles.orderButton}>
+                        <TouchableOpacity 
+                            style = {styles.orderButton}
+                            onPress = {() => {
+                                this.orderButtonPressedHandler();
+                            }}
+                        >
                             <Text style = {{fontSize: 18, fontWeight: 'bold'}}>Order</Text>
                         </TouchableOpacity>
                     </View>
