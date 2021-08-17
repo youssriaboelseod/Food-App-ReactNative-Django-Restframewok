@@ -23,6 +23,7 @@ class Product extends Component {
         }
     }
 
+
     changeQuantity = (status) => {
         if(status === 1) {
             this.setState({
@@ -40,7 +41,7 @@ class Product extends Component {
 
     renderHeader() {
         return(
-            <View style = {{flexDirection: 'row'}}>
+            <View style = {styles.headerWrapper}>
                 <TouchableOpacity
                     style = {styles.iconBackWrapper}
                     onPress={() => this.props.navigation.goBack()}
@@ -62,8 +63,8 @@ class Product extends Component {
                     <Image 
                         style = {styles.foodImage}
                         source = {miXao}
-
-                    ></Image>
+                    >
+                    </Image>
                     <View style = {styles.quantityWrapper}>
                         <TouchableOpacity 
                             style = {styles.decreaseButton}
@@ -88,9 +89,16 @@ class Product extends Component {
                     <View style = {styles.fontNameWrapper}>
                         <Text style = {styles.foodName}>Bún bò - 25 min</Text>
                     </View>
+                    <View style = {styles.discriptionWrapper}>
+                        <Text style = {styles.discriptionText}>Discription</Text>
+                    </View>
+                    <View style = {styles.orderWrapper}>
+                        <Text style = {styles.priceNumber}>20.000đ</Text>
+                        <TouchableOpacity style = {styles.orderButton}>
+                            <Text style = {{fontSize: 18, fontWeight: 'bold'}}>Order</Text>
+                        </TouchableOpacity>
+                    </View>
                 </View>
-
-                
             </View>
         );
     }
@@ -108,14 +116,15 @@ class Product extends Component {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#e6e6e6'
+        backgroundColor: '#FFF'
     },
+    headerWrapper: {
+        flexDirection: 'column',
+        justifyContent: 'center',
+        height: 25
+    },  
     iconBackWrapper: {
         width: 50,
-        paddingLeft: 10,
-        marginTop: 20,
-        justifyContent: 'center',
-        height: 30
     },
     backIcon: {
         width: 30,
@@ -136,10 +145,11 @@ const styles = StyleSheet.create({
         width: 150,
         justifyContent: 'center',
         flexDirection: 'row',
+        
     },
     decreaseButton: {
         width: 50,
-        backgroundColor: '#FFF',
+        backgroundColor: '#f2f2f2',
         alignItems: 'center',
         justifyContent: 'center',
         borderTopLeftRadius: 25,
@@ -150,26 +160,58 @@ const styles = StyleSheet.create({
     },
     quantityNumber: {
         width: 50,
-        backgroundColor: '#FFF',
+        backgroundColor: '#f2f2f2',
         alignItems: 'center',
         justifyContent: 'center'
     },
     increaseButton: {
         width: 50,
-        backgroundColor: '#FFF',
+        backgroundColor: '#f2f2f2',
         justifyContent: 'center',
         alignItems: 'center',
         borderTopRightRadius: 25,
         borderBottomRightRadius: 25
     },
     fontNameWrapper: {
-        alignItems: 'center',
+        flexDirection: 'row',
         marginTop: 30,
         // flex: 1
     },
     foodName: {
+        padding: 10,
         fontSize: 20,
         fontWeight: 'bold'
+    },
+    discriptionWrapper: {
+        alignItems: 'center',
+        marginTop: 5
+    },
+    discriptionText: {
+        fontSize: 18
+    },
+    orderWrapper: {
+        flexDirection: 'row',
+        marginTop: 210,
+        width: '100%',
+        height: 70,
+        borderTopColor: '#f2f2f2',
+        borderTopWidth: 1,
+        alignItems: 'center',
+        justifyContent: 'space-between'
+    },
+    priceNumber: {
+        fontSize: 18,
+        padding: 10,
+        fontWeight: 'bold'
+    },
+    orderButton: {
+        marginRight: 10,
+        padding: 10,
+        width: 250,
+        height: 50,
+        backgroundColor: '#f2f2f2',
+        alignItems: 'center',
+        borderRadius: 10
     }
 });
 

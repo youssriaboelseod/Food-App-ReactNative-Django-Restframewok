@@ -319,7 +319,7 @@ const styles = StyleSheet.create({
         margin: 10,
     },
     textCategories: {
-        fontSize: 30,
+        fontSize: 25,
         fontWeight: 'bold'
     },
     categoriesImage: {

@@ -85,6 +85,7 @@ class Product(models.Model):
     imgUrl = models.ImageField(null = True, blank = True, upload_to = 'images/')
     created_date = models.DateTimeField(auto_now_add = True)
     duration = models.CharField(max_length = 20)
+    description = models.TextField(default = 'No discription')
     
     class Meta:
         ordering = ['is_available','-created_date']
