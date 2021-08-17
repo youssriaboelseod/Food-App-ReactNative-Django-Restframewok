@@ -6,7 +6,10 @@ import {
     TouchableOpacity,
     StyleSheet,
 } from "react-native";
-import { Home } from "../screens";
+import { 
+    Home,
+    User
+} from "../screens";
 import {
     createBottomTabNavigator,
     BottomTabBar
@@ -64,7 +67,7 @@ const Tabs = () => {
             </Tab.Screen>
             <Tab.Screen
                 name = "User"
-                component = {Home}
+                component = {User}
                 options={{header: () => null}}
             >
             </Tab.Screen>

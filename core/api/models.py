@@ -86,6 +86,7 @@ class Product(models.Model):
     created_date = models.DateTimeField(auto_now_add = True)
     duration = models.CharField(max_length = 20)
     description = models.TextField(default = 'No discription')
+    is_in_order = models.BooleanField(default = False)
     
     class Meta:
         ordering = ['is_available','-created_date']
