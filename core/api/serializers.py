@@ -18,3 +18,8 @@ class OrderSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Order
         fields = ['__all__']
+        
+        
+class SignInSerializer(serializers.Serializer):
+    email = serializers.EmailField(max_length = 255, required = True)
+    password = serializers.CharField()
