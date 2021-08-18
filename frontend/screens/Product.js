@@ -32,33 +32,34 @@ const displayAlert = (message) => {
         ])
 }
 
-const getSelectedItem = async () => {
-    const selectedItem = await AsyncStorage.getItem('item-selected');
-    return toString(selectedItem);
-}
-
 class Product extends Component {
     constructor(props) {
         super(props);
         this.state = {
             item: [],
-            quantity: 1
+            quantity: 1,
+            itemName: null
         }
     }
 
-    componentDidMount() {
-        const itemName = getSelectedItem();
-        console.log(`${ipAddress}/api/detail-category-product?name=${itemName}`)
-        axios.get(`${ipAddress}/api/detail-category-product?name=${this.state.itemName}`)
-            .then((response) => {
-                console.log(response);
-                // this.setState({
-                //     item: response.data
-                // });
-            })
-            .catch((error) => {
-                displayAlert(error);
-            });
+    getItem = async () => {
+        const itemName = await AsyncStorage.getItem('item-selected');
+        if(itemName != null) {
+            axios.get(`${ipAddress}/api/detail-category-product?name=${itemName}`)
+                .then((response) => {
+                    // console.log(response);
+                    this.setState({
+                        item: response.data
+                    });
+                })
+                .catch((error) => {
+                    displayAlert(error);
+                });
+        }
+    }
+
+    componentDidMount () {
+        this.getItem();
     }
 
     changeQuantity = (status) => {
