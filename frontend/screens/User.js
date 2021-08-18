@@ -30,7 +30,7 @@ class User extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            username: '',
+            email: '',
             password: '',
         }
     }
@@ -41,25 +41,25 @@ class User extends Component {
     }
 
     handleLoginPressed = () => {
-        console.log('Login pressed!')
+        console.log(this.state.email)
     }
 
     render() {
         return(
             <SafeAreaView style = {styles.container}>
                 <View style = {styles.titleWrapper}>
-                    <Text style = {styles.loginTitle}>Sign in to app</Text>
+                    <Text style = {styles.loginTitle}>Sign in to Food App</Text>
                 </View>
                 <View style = {styles.loginWrapper}>
                     <TextInput
                         style = {styles.input}
-                        placeholder = 'Username'
+                        placeholder = 'Email'
                         onChangeText = {(text) => {
                             this.setState({
-                                username: text
+                                email: text
                             });
                         }}
-                        value = {this.state.username}
+                        value = {this.state.email}
                     ></TextInput>
                     <TextInput
                         style = {styles.input}
@@ -78,7 +78,7 @@ class User extends Component {
                             this.handleLoginPressed()
                         }}
                     >
-                        <Text style = {{fontSize: 17}}>Sign in</Text>
+                        <Text style = {{fontSize: 20, fontWeight: 'bold'}}>Sign in</Text>
                     </TouchableOpacity>
                     <View style = {styles.registerWrapper}>
                         <Text style = {styles.registerText}>Don't have any accounts ? </Text>
@@ -97,7 +97,7 @@ class User extends Component {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#f0f0f5',
+        backgroundColor: '#f5f5ef',
         justifyContent: 'center'
     },
     titleWrapper: {
@@ -122,7 +122,7 @@ const styles = StyleSheet.create({
         fontSize: 17
     },
     buttonLogin: {
-        backgroundColor: '#e0e0eb',
+        backgroundColor: '#ff7733',
         width: 250,
         height: 50,
         marginTop: 20,

@@ -19,7 +19,14 @@ class OrderSerializer(serializers.ModelSerializer):
         model = models.Order
         fields = ['__all__']
         
-        
+
+# Authenication's serializers
 class SignInSerializer(serializers.Serializer):
     email = serializers.EmailField(max_length = 255, required = True)
     password = serializers.CharField()
+    
+    
+class CustomerSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.Customer
+        fields = ['user_name', 'first_name', 'email', 'password']
