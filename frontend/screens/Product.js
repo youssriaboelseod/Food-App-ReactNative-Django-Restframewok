@@ -1,4 +1,5 @@
 import axios from "axios";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import React, {  Component } from "react";
 import {
     View,
@@ -8,7 +9,8 @@ import {
     TouchableOpacity,
     Image,
     Animated,
-    ImageStore
+    ImageStore,
+    Alert
 } from "react-native";
 import {
     backIcon,
@@ -30,21 +32,29 @@ const displayAlert = (message) => {
         ])
 }
 
+const getSelectedItem = async () => {
+    const selectedItem = await AsyncStorage.getItem('item-selected');
+    return toString(selectedItem);
+}
+
 class Product extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            item: this.props.route.params.item,
+            item: [],
             quantity: 1
         }
     }
 
     componentDidMount() {
-        axios.get(`${ipAddress}/api/detail-category-product?name=${this.state.item.name}`)
+        const itemName = getSelectedItem();
+        console.log(`${ipAddress}/api/detail-category-product?name=${itemName}`)
+        axios.get(`${ipAddress}/api/detail-category-product?name=${this.state.itemName}`)
             .then((response) => {
-                this.setState({
-                    item: response.data
-                });
+                console.log(response);
+                // this.setState({
+                //     item: response.data
+                // });
             })
             .catch((error) => {
                 displayAlert(error);

@@ -50,13 +50,12 @@ class User extends Component {
             email: this.state.email,
             password: this.state.password
         })
-        .then((response) => {
+        .then(async (response) => {
+            await AsyncStorage.setItem('token', response.data.access_token);
             displayAlert('Create succesfully');
             this.props.navigation.navigate('Product', {
 
-            })
-
-            // access_token
+            });
         })
         .catch((error) => {
             displayAlert(error);

@@ -1,4 +1,5 @@
 import axios from 'axios';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import React, {  Component } from "react";
 import {
     View,
@@ -136,9 +137,10 @@ class Home extends Component {
                     marginRight: 15,
                     marginLeft: 15,
                 }}
-                onPress = {() => {
+                onPress = {async () => {
+                    await AsyncStorage.setItem('item-selected', item.name);
                     this.props.navigation.navigate('Product', {
-                        item: item,
+
                     });
                 }}
             >
