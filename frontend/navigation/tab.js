@@ -49,7 +49,7 @@ const Tabs = () => {
         >
             <Tab.Screen
                 name = "Home"
-                component = {Home}
+                component = { Home }
                 options={{header: () => null}}
             >
             </Tab.Screen>

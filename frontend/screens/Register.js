@@ -1,16 +1,17 @@
 import React, { Component } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {
-  SafeAreaView,
-  StyleSheet,
-  Text,
-  View,
-  TextInput,
-  TouchableOpacity,
-  Alert
+    SafeAreaView,
+    StyleSheet,
+    Text,
+    View,
+    TextInput,
+    TouchableOpacity,
+    Alert
 } from 'react-native';
-import {
-    ipAddress
+
+import  {
+    ipAddress,
 } from '../contants';
 
 const axios = require('axios');
@@ -29,34 +30,31 @@ const displayAlert = (message) => {
         ])
 }
 
-class User extends Component {
+class Register extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            email: '',
+            username: '',
             password: '',
+            email: '',
+            firstname: ''
         }
     }
 
-    handleRegisterPressed = () => {
-        console.log('Pressed');
-        this.props.navigation.navigate('Register', {
-
-        });
+    handleSignInPressed = () => {
+        this.props.navigation.goBack();
     }
 
-    handleLoginPressed = () => {
+    handleRegisterPressed = () =>{
         axios.post(`${ipAddress}/api/sign-in/`, {
             email: this.state.email,
-            password: this.state.password
+            username: this.state.username,
+            password: this.state.password,
+            first_name: this.state.firstname
         })
         .then((response) => {
-            displayAlert('Create succesfully');
-            this.props.navigation.navigate('Product', {
-
-            })
-
-            // access_token
+            displayAlert('Create account successfully');
+            this.props.navigation.navigate('Signin');
         })
         .catch((error) => {
             displayAlert(error);
@@ -67,7 +65,7 @@ class User extends Component {
         return(
             <SafeAreaView style = {styles.container}>
                 <View style = {styles.titleWrapper}>
-                    <Text style = {styles.loginTitle}>Sign in to Food App</Text>
+                    <Text style = {styles.loginTitle}>Sign up to Food app</Text>
                 </View>
                 <View style = {styles.loginWrapper}>
                     <TextInput
@@ -91,20 +89,42 @@ class User extends Component {
                         }}
                         value = {this.state.password}
                     ></TextInput>
+                    <TextInput
+                        style = {styles.input}
+                        secureTextEntry={true}
+                        placeholder = 'Username'
+                        onChangeText = {(text) => {
+                            this.setState({
+                                username: text
+                            });
+                        }}
+                        value = {this.state.username}
+                    ></TextInput>
+                    <TextInput
+                        style = {styles.input}
+                        secureTextEntry={true}
+                        placeholder = 'First-name'
+                        onChangeText = {(text) => {
+                            this.setState({
+                                firstname: text
+                            });
+                        }}
+                        value = {this.state.firstname}
+                    ></TextInput>
                     <TouchableOpacity 
                         style = {styles.buttonLogin}
                         onPress = {() => {
-                            this.handleLoginPressed()
+                            this.handleRegisterPressed()
                         }}
                     >
-                        <Text style = {{fontSize: 20, fontWeight: 'bold'}}>Sign in</Text>
+                        <Text style = {{fontSize: 17}}>Sign up</Text>
                     </TouchableOpacity>
                     <View style = {styles.registerWrapper}>
-                        <Text style = {styles.registerText}>Don't have any accounts ? </Text>
+                        <Text style = {styles.registerText}>Already have any accounts ? </Text>
                         <TouchableOpacity
-                            onPress = {() => {this.handleRegisterPressed()}}
+                            onPress = {() => {this.handleSignInPressed()}}
                         >
-                            <Text style = {styles.registerText}>Register an account</Text>
+                            <Text style = {styles.registerText}>Sign in</Text>
                         </TouchableOpacity>
                     </View>
                 </View>
@@ -116,8 +136,9 @@ class User extends Component {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#f5f5ef',
-        justifyContent: 'center'
+        backgroundColor: '#f0f0f5',
+        top: 100
+        // justifyContent: 'center'
     },
     titleWrapper: {
         marginBottom: 20,
@@ -158,4 +179,4 @@ const styles = StyleSheet.create({
     }
 });
 
-export default User;
+export default Register;

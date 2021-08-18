@@ -89,7 +89,7 @@ class Product extends Component {
 
     renderFoodInfor() {
         return(
-            <View>
+            <SafeAreaView>
                 <View style = {styles.foodInforWrapper}>
                     <Image 
                         style = {styles.foodImage}
@@ -135,7 +135,7 @@ class Product extends Component {
                         </TouchableOpacity>
                     </View>
                 </View>
-            </View>
+            </SafeAreaView>
         );
     }
 

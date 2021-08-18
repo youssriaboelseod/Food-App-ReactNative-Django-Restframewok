@@ -7,7 +7,13 @@ import {
 } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import {Home, Product, OrderDelivery} from "./screens";
+import {
+    Home, 
+    Product, 
+    OrderDelivery,
+    Register,
+    User
+} from "./screens";
 import Tabs from "./navigation/tab.js";
 import 'react-native-gesture-handler';
 
@@ -30,6 +36,16 @@ const App = () => {
                 <Stack.Screen 
                     name = "OrderDelivery" 
                     component = {OrderDelivery} 
+                    options={{header: () => null}}
+                ></Stack.Screen>
+                <Stack.Screen
+                    name = "Register" 
+                    component = {Register} 
+                    options={{header: () => null}}
+                ></Stack.Screen>
+                <Stack.Screen
+                    name = "Signin" 
+                    component = {User} 
                     options={{header: () => null}}
                 ></Stack.Screen>
             </Stack.Navigator>
