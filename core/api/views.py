@@ -8,6 +8,7 @@ from rest_framework.decorators import action
 from rest_framework import permissions, status
 from django.conf import settings
 from django.contrib.auth import authenticate
+from django.contrib.auth.hashers import make_password
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 
 # Authentication
@@ -42,6 +43,7 @@ class RegisterView(APIView):
     def post(self, request, format = None):
         serializer = self.serializer_class(data = request.data)
         if serializer.is_valid():
+            serializer.validated_data['password'] = make_password(serializer.validated_data['password'])
             serializer.save()
             return Response('Created new account!', status = status.HTTP_201_CREATED)
         return Response(serializer.errors, status = status.HTTP_400_BAD_REQUEST)
