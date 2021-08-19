@@ -35,6 +35,8 @@ class User extends Component {
         this.state = {
             email: '',
             password: '',
+            emailLogin: '',
+            isSigned: false
         }
     }
 
@@ -44,12 +46,38 @@ class User extends Component {
         });
     }
 
+    async middleWare () {
+        const token = await AsyncStorage.getItem('token');
+        console.log(token);
+        axios.get(`${ipAddress}/api/middleware/`, {
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${token}`
+            }
+        })
+            .then((response) => {
+                console.log(response.data);
+                this.setState({
+                    isSigned: true
+                });
+            })
+            .catch((error) => {
+
+            });
+    }
+
+    componentDidMount() {
+        console.log('ok');
+        this.middleWare();
+    }
+
     handleLoginPressed = () => {
         axios.post(`${ipAddress}/api/sign-in/`, {
             email: this.state.email,
             password: this.state.password
         })
         .then(async (response) => {
+            console.log(response.data.access_token)
             await AsyncStorage.setItem('token', response.data.access_token);
             this.setState({
                 email: '',
@@ -64,7 +92,7 @@ class User extends Component {
         })
     }
 
-    render() {
+    renderSignedView() {
         return(
             <SafeAreaView style = {styles.container}>
                 <View style = {styles.titleWrapper}>
@@ -109,6 +137,35 @@ class User extends Component {
                         </TouchableOpacity>
                     </View>
                 </View>
+            </SafeAreaView>
+        );
+    }
+
+    renderUserView() {
+        return(
+            <SafeAreaView style = {styles.container}>
+                <Text>Hello</Text>
+            </SafeAreaView>
+        );
+        
+    }
+
+    renderMainView() {
+        if(this.state.isSigned) {
+            return(
+                this.renderUserView()
+            );
+        } else {
+            return(
+                this.renderSignedView()
+            );
+        }
+    }
+
+    render() {
+        return(
+            <SafeAreaView style = {styles.container}>
+                {this.renderMainView()}
             </SafeAreaView>
         );
     }
