@@ -10,5 +10,6 @@ urlpatterns = [
     # authentication
     
     path('sign-in/', views.SignInView.as_view(), name = 'sign-in'),
-    path('register/', views.RegisterView.as_view(), name = 'register')
+    path('register/', views.RegisterView.as_view(), name = 'register'),
+    path('middleware/', views.MiddlewareView.as_view(), name = 'middleware')
 ]

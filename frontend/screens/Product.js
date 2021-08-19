@@ -55,6 +55,8 @@ class Product extends Component {
                 .catch((error) => {
                     displayAlert(error);
                 });
+        } else {
+            this.props.navigation.navigate('Home', {});
         }
     }
 

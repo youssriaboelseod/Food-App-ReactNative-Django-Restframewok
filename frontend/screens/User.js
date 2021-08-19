@@ -39,7 +39,6 @@ class User extends Component {
     }
 
     handleRegisterPressed = () => {
-        console.log('Pressed');
         this.props.navigation.navigate('Register', {
 
         });
@@ -52,7 +51,10 @@ class User extends Component {
         })
         .then(async (response) => {
             await AsyncStorage.setItem('token', response.data.access_token);
-            displayAlert('Create succesfully');
+            this.setState({
+                email: '',
+                password: ''
+            })
             this.props.navigation.navigate('Product', {
 
             });

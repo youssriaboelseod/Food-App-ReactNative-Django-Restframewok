@@ -10,8 +10,16 @@ from django.conf import settings
 from django.contrib.auth import authenticate
 from django.contrib.auth.hashers import make_password
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
+from rest_framework_simplejwt.authentication import JWTAuthentication
 
 # Authentication
+
+class MiddlewareView(APIView):
+    permission_classes = [permissions.IsAuthenticated]
+
+    def get(self, request, format = None):
+        return Response(request.user.email, status = status.HTTP_200_OK)
+    
 
 class SignInView(APIView):
     serializer_class = serializers.SignInSerializer

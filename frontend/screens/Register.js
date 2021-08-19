@@ -46,7 +46,7 @@ class Register extends Component {
     }
 
     handleRegisterPressed = () =>{
-        axios.post(`${ipAddress}/api/sign-in/`, {
+        axios.post(`${ipAddress}/api/register/`, {
             email: this.state.email,
             username: this.state.username,
             password: this.state.password,
@@ -54,7 +54,7 @@ class Register extends Component {
         })
         .then((response) => {
             displayAlert('Create account successfully');
-            this.props.navigation.navigate('Signin');
+            this.props.navigation.goBack();
         })
         .catch((error) => {
             displayAlert(error);
@@ -91,7 +91,6 @@ class Register extends Component {
                     ></TextInput>
                     <TextInput
                         style = {styles.input}
-                        secureTextEntry={true}
                         placeholder = 'Username'
                         onChangeText = {(text) => {
                             this.setState({
@@ -102,7 +101,6 @@ class Register extends Component {
                     ></TextInput>
                     <TextInput
                         style = {styles.input}
-                        secureTextEntry={true}
                         placeholder = 'First-name'
                         onChangeText = {(text) => {
                             this.setState({
