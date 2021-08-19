@@ -56,9 +56,9 @@ class User extends Component {
             }
         })
             .then((response) => {
-                console.log(response.data);
                 this.setState({
-                    isSigned: true
+                    isSigned: true,
+                    emailLogin: response.data
                 });
             })
             .catch((error) => {
@@ -67,7 +67,6 @@ class User extends Component {
     }
 
     componentDidMount() {
-        console.log('ok');
         this.middleWare();
     }
 
@@ -90,6 +89,13 @@ class User extends Component {
         .catch((error) => {
             displayAlert(error);
         })
+    }
+
+    async handleSignOuPressed() {
+        await AsyncStorage.setItem('token', '');
+        this.setState({
+            isSigned: false
+        });
     }
 
     renderSignedView() {
@@ -144,7 +150,19 @@ class User extends Component {
     renderUserView() {
         return(
             <SafeAreaView style = {styles.container}>
-                <Text>Hello</Text>
+                <View style = {styles.titleWrapper}>
+                    <Text style = {styles.loginTitle}>Welcome {this.state.emailLogin}</Text>
+                </View>
+                <View style = {styles.loginWrapper}>
+                    <TouchableOpacity 
+                        style = {styles.buttonLogin}
+                        onPress = {() => {
+                            this.handleSignOuPressed()
+                        }}
+                    >
+                        <Text style = {{fontSize: 20, fontWeight: 'bold'}}>Sign out</Text>
+                    </TouchableOpacity>
+                </View>
             </SafeAreaView>
         );
         
