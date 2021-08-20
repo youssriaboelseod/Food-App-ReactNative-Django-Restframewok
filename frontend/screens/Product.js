@@ -47,10 +47,10 @@ class Product extends Component {
         if(itemName != null) {
             axios.get(`${ipAddress}/api/detail-category-product?name=${itemName}`)
                 .then((response) => {
-                    // console.log(response);
                     this.setState({
                         item: response.data
                     });
+                    console.log('OK')
                 })
                 .catch((error) => {
                     displayAlert(error);
@@ -79,8 +79,20 @@ class Product extends Component {
         }
     }
 
-    orderButtonPressedHandler = () => {
-        
+    async orderButtonPressedHandler (){
+        const tokenTmp = await AsyncStorage.getItem('token');
+        axios.post(`${ipAddress}/api/order/`, {
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${tokenTmp}`
+            }
+        }).
+            then((response) => {
+                displayAlert('OK');
+            })
+            .catch((error) => {
+                displayAlert('error');
+            })
     }
 
     renderHeader() {

@@ -84,6 +84,7 @@ class User extends Component {
                 emailLogin: response.data.email,
                 isSigned: true
             })
+            console.log(this.state.emailLogin);
             this.props.navigation.navigate('Home', {
 
             });

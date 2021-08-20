@@ -37,7 +37,8 @@ class SignInView(APIView):
                 refreshToken = TokenObtainPairSerializer.get_token(User)
                 data = {
                     'refresh_token': str(refreshToken),
-                    'access_token': str(refreshToken.access_token)
+                    'access_token': str(refreshToken.access_token),
+                    'email': str(User.email)
                 }
                 return Response(data, status = status.HTTP_200_OK)
             return Response('Email or password is incorrect!', status = status.HTTP_401_UNAUTHORIZED)
@@ -127,11 +128,11 @@ class OrderView(APIView):
     permission_classes = [permissions.IsAuthenticated]
     
     def post(self, request, format = None):
-        customerInstance = get_object_or_404(models.Customer, email = request.user)
+        print(self.request.user.email)
         try:
-            newOrder = models.Order.objects.create(customer = customerInstance)
-            newOrder
-            return Response('Created', status = status.HTTP_201_CREATED)
+            # newOrder = models.Order.objects.create(customer = customerInstance)
+            # newOrder.save()
+            return Response({'order_id': '5'}, status = status.HTTP_200_OK)
         except:
-            return Response('We are having some errors. Please try later!')
+            return Response({'error': 'Error'})
     
