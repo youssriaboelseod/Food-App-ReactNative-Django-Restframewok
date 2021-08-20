@@ -115,7 +115,7 @@ class Extra(models.Model):
     
     
 class Order(models.Model):
-    customer = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete = models.CASCADE)
+    customer = models.ForeignKey(Customer, on_delete = models.CASCADE)
     created_at = models.DateTimeField(auto_now_add = True)
     paid = models.BooleanField(default = False)
     

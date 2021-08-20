@@ -127,10 +127,11 @@ class OrderView(APIView):
     permission_classes = [permissions.IsAuthenticated]
     
     def post(self, request, format = None):
-        instanceUser = request.user
-        print(instanceUser)
-        serializer = self.serializer_class(data = instanceUser)
-        if serializer.is_valid:
+        customerInstance = get_object_or_404(models.Customer, email = request.user)
+        try:
+            newOrder = models.Order.objects.create(customer = customerInstance)
+            newOrder
             return Response('Created', status = status.HTTP_201_CREATED)
-        return Response(serializer.errors, status = status.HTTP_400_BAD_REQUEST)
+        except:
+            return Response('We are having some errors. Please try later!')
     
