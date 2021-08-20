@@ -61,9 +61,9 @@ class Register extends Component {
         })
     }
 
-    render() {
+    renderRegisterView() {
         return(
-            <SafeAreaView style = {styles.container}>
+            <SafeAreaView>
                 <View style = {styles.titleWrapper}>
                     <Text style = {styles.loginTitle}>Sign up to Food app</Text>
                 </View>
@@ -126,6 +126,14 @@ class Register extends Component {
                         </TouchableOpacity>
                     </View>
                 </View>
+            </SafeAreaView>
+        );
+    }
+
+    render() {
+        return(
+            <SafeAreaView style = {styles.container}>
+                {this.renderRegisterView()}
             </SafeAreaView>
         );
     }

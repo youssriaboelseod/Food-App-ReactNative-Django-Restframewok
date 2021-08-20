@@ -127,6 +127,10 @@ class OrderView(APIView):
     permission_classes = [permissions.IsAuthenticated]
     
     def post(self, request, format = None):
-        pass
-    
+        instanceUser = request.user
+        print(instanceUser)
+        serializer = self.serializer_class(data = instanceUser)
+        if serializer.is_valid:
+            return Response('Created', status = status.HTTP_201_CREATED)
+        return Response(serializer.errors, status = status.HTTP_400_BAD_REQUEST)
     

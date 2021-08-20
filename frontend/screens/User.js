@@ -48,7 +48,6 @@ class User extends Component {
 
     async middleWare () {
         const token = await AsyncStorage.getItem('token');
-        console.log(token);
         axios.get(`${ipAddress}/api/middleware/`, {
             headers: {
                 'Content-Type': 'application/json',
@@ -56,13 +55,14 @@ class User extends Component {
             }
         })
             .then((response) => {
+                console.log(response.data);
                 this.setState({
                     isSigned: true,
                     emailLogin: response.data
                 });
             })
             .catch((error) => {
-
+                console.log('Autholorize!')
             });
     }
 
@@ -80,9 +80,11 @@ class User extends Component {
             await AsyncStorage.setItem('token', response.data.access_token);
             this.setState({
                 email: '',
-                password: ''
+                password: '',
+                emailLogin: response.data.email,
+                isSigned: true
             })
-            this.props.navigation.navigate('Product', {
+            this.props.navigation.navigate('Home', {
 
             });
         })

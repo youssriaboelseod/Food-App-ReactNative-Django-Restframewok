@@ -30,3 +30,9 @@ class CustomerSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Customer
         fields = ['user_name', 'first_name', 'email', 'password']
+        
+        
+class OrderSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.Order
+        fields = ['customer']
