@@ -127,12 +127,13 @@ class OrderView(APIView):
     serializer_class = serializers.OrderSerializer
     permission_classes = [permissions.IsAuthenticated]
     
-    def post(self, request, format = None):
-        print(self.request.user.email)
+    def get(self, request, format = None):
+        customerInstance = get_object_or_404(models.Customer, email = request.user)
+        print(request.user)
         try:
-            # newOrder = models.Order.objects.create(customer = customerInstance)
-            # newOrder.save()
-            return Response({'order_id': '5'}, status = status.HTTP_200_OK)
+            newOrder = models.Order.objects.create(customer = customerInstance)
+            newOrder.save()
+            return Response({'order_id': newOrder.id}, status = status.HTTP_200_OK)
         except:
             return Response({'error': 'Error'})
     

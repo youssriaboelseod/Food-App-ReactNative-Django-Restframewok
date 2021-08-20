@@ -25,10 +25,10 @@ const displayAlert = (message) => {
         [
             {
             text: "Cancel",
-            onPress: () => console.log("Cancel Pressed"),
+            
             style: "cancel"
             },
-            { text: "OK", onPress: () => console.log("OK Pressed") }
+            { text: "OK"}
         ])
 }
 
@@ -79,19 +79,19 @@ class Product extends Component {
         }
     }
 
-    async orderButtonPressedHandler (){
+    async orderButtonPressedHandler() {
         const tokenTmp = await AsyncStorage.getItem('token');
-        axios.post(`${ipAddress}/api/order/`, {
+        axios.get(`${ipAddress}/api/order/`, {
             headers: {
                 'Content-Type': 'application/json',
                 Authorization: `Bearer ${tokenTmp}`
             }
-        }).
-            then((response) => {
+        })
+            .then((response) => {
                 displayAlert('OK');
             })
             .catch((error) => {
-                displayAlert('error');
+                displayAlert('Please sign in before ordering!');
             })
     }
 
@@ -252,7 +252,7 @@ const styles = StyleSheet.create({
     },
     orderWrapper: {
         flexDirection: 'row',
-        marginTop: 210,
+        marginTop: 280,
         width: '100%',
         height: 70,
         borderTopColor: '#f2f2f2',
