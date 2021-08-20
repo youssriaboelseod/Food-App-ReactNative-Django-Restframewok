@@ -6,7 +6,8 @@ urlpatterns = [
     path('detail-product/<str:pk>/', views.CategoryDetailView.as_view(), name = 'detail-products'),
     path('category-products/', views.ListProductsCategory.as_view(), name = 'category-products'),
     path('detail-category-product/', views.DetailProductCategory.as_view(), name = 'detail-category-product'),
-    path('order/', views.OrderView.as_view(), name = 'create-order'),
+    path('order/', views.OrderView.as_view(), name = 'order'),
+    path('order-detail/', views.OrderDetailView.as_view(), name = 'order-detail'),
     
     # authentication
     

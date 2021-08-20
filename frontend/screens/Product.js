@@ -44,6 +44,9 @@ class Product extends Component {
 
     getItem = async () => {
         const itemName = await AsyncStorage.getItem('item-selected');
+        this.setState({
+            itemName: itemName
+        });
         if(itemName != null) {
             axios.get(`${ipAddress}/api/detail-category-product?name=${itemName}`)
                 .then((response) => {
@@ -91,7 +94,23 @@ class Product extends Component {
                 this.setState({
                     quantity: 1
                 })
-                displayAlert('OK');
+                // console.log(response.data.order_id);
+                axios.post(`${ipAddress}/api/order-detail/`, {
+                    product_name: this.state.itemName,
+                    order_id: response.data.order_id,
+                    quantity: this.state.quantity
+                }, {
+                    headers: {
+                        'Content-Type': 'application/json',
+                        Authorization: `Bearer ${tokenTmp}`
+                    }, 
+                })
+                .then((response) => {
+                    displayAlert('Added')
+                })
+                .catch((error) => {
+                    displayAlert('We have some problems!')
+                });
             })
             .catch((error) => {
                 displayAlert('Please sign in before ordering!');

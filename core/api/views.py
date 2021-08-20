@@ -143,9 +143,10 @@ class OrderDetailView(APIView):
     permission_classes = [permissions.IsAuthenticated]
     
     def post(self, request, format = None):
-        productName = request.data.name
-        orderId = request.data.order_id
-        quantity = request.data.quantity
+        productName = request.data['product_name']
+        orderId = request.data['order_id']
+        quantity = request.data['quantity']
+        print(orderId)
         productInstance = models.Product.objects.get(name = productName)
         orderInstance = models.Order.objects.get(id = orderId)
         newOrderDetail = models.OrderDetail.objects.create(order = orderInstance, quantity = quantity, product = productInstance)
