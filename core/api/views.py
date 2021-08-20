@@ -136,4 +136,18 @@ class OrderView(APIView):
             return Response({'order_id': newOrder.id}, status = status.HTTP_200_OK)
         except:
             return Response({'error': 'Error'})
+        
+        
+class OrderDetailView(APIView):
+    serializer_class = [serializers.OrderDetailSerializer]
+    permission_classes = [permissions.IsAuthenticated]
+    
+    def post(self, request, format = None):
+        productName = request.data.name
+        orderId = request.data.order_id
+        quantity = request.data.quantity
+        productInstance = models.Product.objects.get(name = productName)
+        orderInstance = models.Order.objects.get(id = orderId)
+        newOrderDetail = models.OrderDetail.objects.create(order = orderInstance, quantity = quantity, product = productInstance)
+        return Response('Created', status = status.HTTP_201_CREATED)
     

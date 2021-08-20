@@ -88,6 +88,9 @@ class Product extends Component {
             }
         })
             .then((response) => {
+                this.setState({
+                    quantity: 1
+                })
                 displayAlert('OK');
             })
             .catch((error) => {
