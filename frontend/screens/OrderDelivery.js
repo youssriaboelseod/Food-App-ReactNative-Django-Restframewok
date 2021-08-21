@@ -19,7 +19,20 @@ class OrderDelivery extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            orderProducts: []
+            orderProducts: [
+                {
+                    name: 'mi'
+                },
+                {
+                    name: 'bun'
+                },
+                {
+                    name: 'bun'
+                },
+                {
+                    name: 'bun'
+                }
+            ]
         }
     }
 
@@ -48,25 +61,30 @@ class OrderDelivery extends Component {
         );
     }
 
-    renderItem() {
+    renderCheckOut() {
         return(
-            <View>
-                
+            <View style = {styles.checkOutWrapper}>
+
             </View>
         );
     }
 
     renderOrder() {
+        const renderItem = ({item}) => (
+            <View style = {styles.orderDetailWrapper}>
+                <Text>{item.name}</Text>
+            </View>
+        )
+
         return(
             <View style = {styles.orderWrapper}>
                 <FlatList
                     data = {this.state.orderProducts}
-                    horizontal
                     showsHorizontalScrollIndicator = {false}
                     keyExtractor = {(item) => item.id}
                     renderItem = {renderItem}
                     extraData = {this.state.selectedId}
-                    contentContainerStyle = {{padding: 10, marginTop: 15}}
+                    // contentContainerStyle = {{padding: 10}}
                 ></FlatList>
             </View>
         );
@@ -78,6 +96,7 @@ class OrderDelivery extends Component {
             <SafeAreaView style = {styles.container}>
                 {this.renderHeader()}
                 {this.renderOrder()}
+                {this.renderCheckOut()}
             </SafeAreaView>
         );
     }
@@ -85,7 +104,8 @@ class OrderDelivery extends Component {
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1
+        flex: 1,
+        backgroundColor: '#F0F0F0'
     },  
     headerWrapper: {
         flexDirection: 'row',
@@ -103,9 +123,8 @@ const styles = StyleSheet.create({
         height: 25
     },
     orderWrapper: {
-        marginTop: 50,
-        width: '100%',
-        flexDirection: 'column'
+        marginTop: 5,
+        flex: 1
     },
     editText: {
         fontSize: 18,
@@ -113,6 +132,18 @@ const styles = StyleSheet.create({
     },
     editButtomWrapper: {
         left: 180
+    },
+    orderDetailWrapper: {
+        backgroundColor: '#FFF',
+        marginBottom: 15,
+        height: 200
+    },
+    checkOutWrapper: {
+        height: 70,
+        flexDirection: 'row',
+        backgroundColor: '#FFF',
+        borderTopWidth: 1,
+        borderColor: '#F0F0F0'
     }
 });
 
