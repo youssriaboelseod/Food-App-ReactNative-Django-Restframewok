@@ -10,7 +10,8 @@ const noodleIcon = require('../assets/icons/noodle-icon.png');
 const hotpotIcon = require('../assets/icons/hotpot-icon.png');
 const friedfoodsIcon = require('../assets/icons/friedfoods-icon.png');
 const backIcon = require('../assets/icons/back-icon.png');
-
+const shoppingCartIcon = require('../assets/icons/shopping-cart.png')
+const backIconLight = require('../assets/icons/back-icon-light.png');
 //IP address
 const ipAddress = 'http://192.168.1.4:8000';
 
@@ -34,5 +35,7 @@ export {
     hotpotIcon,
     friedfoodsIcon,
     backIcon,
+    shoppingCartIcon,
+    backIconLight,
     ipAddress
 }

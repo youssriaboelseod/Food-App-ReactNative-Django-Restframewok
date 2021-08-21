@@ -15,6 +15,7 @@ import {
 import {
     backIcon,
     miXao,
+    backIconLight,
     ipAddress
 } from '../contants';
 
@@ -125,11 +126,12 @@ class Product extends Component {
                     onPress={() => this.props.navigation.goBack()}
                 >
                     <Image
-                        source = {backIcon}
+                        source = {backIconLight}
                         resizeMode = 'contain'
                         style = {styles.backIcon}
                     ></Image>
                 </TouchableOpacity>
+                <Text style = {styles.nameWrapper}>Product information</Text>
             </View>
         );
     }
@@ -202,19 +204,26 @@ const styles = StyleSheet.create({
         backgroundColor: '#FFF'
     },
     headerWrapper: {
-        flexDirection: 'column',
-        justifyContent: 'center',
-        height: 25
+        flexDirection: 'row',
+        alignItems: 'center',
+        backgroundColor: '#ff7733',
+        height: 50
     },  
     iconBackWrapper: {
         width: 50,
+        marginTop: 10
+    },
+    nameWrapper: {
+        left: 50,
+        fontSize: 25,
+        color: '#FFF'
     },
     backIcon: {
-        width: 30,
-        height: 30
+        width: 25,
+        height: 25
     },
     foodInforWrapper: {
-        marginTop: 10,
+        // marginTop: 10,
         alignItems: 'center',
         height: 100
     },
@@ -274,7 +283,7 @@ const styles = StyleSheet.create({
     },
     orderWrapper: {
         flexDirection: 'row',
-        marginTop: 280,
+        marginTop: 265,
         width: '100%',
         height: 70,
         borderTopColor: '#f2f2f2',

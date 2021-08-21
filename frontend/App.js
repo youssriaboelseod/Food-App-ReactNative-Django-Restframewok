@@ -35,7 +35,7 @@ const App = () => {
                 ></Stack.Screen>
                 <Stack.Screen 
                     name = "OrderDelivery" 
-                    component = {OrderDelivery} 
+                    component = { OrderDelivery } 
                     options={{header: () => null}}
                 ></Stack.Screen>
                 <Stack.Screen

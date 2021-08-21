@@ -17,6 +17,7 @@ import {
     ipAddress,
     locationIcon,
     cartIcon,
+    shoppingCartIcon,
     miQuang
 } from '../contants';
 import getImage from '../utils.js';
@@ -81,6 +82,12 @@ class Home extends Component {
             
     }
 
+    orderHandlePressed() {
+        this.props.navigation.navigate('OrderDelivery', {
+
+        });
+    }
+
     renderHeader() {
         return(
             <View 
@@ -118,10 +125,13 @@ class Home extends Component {
                 </View>
 
                 <TouchableOpacity
-                    style = {styles.locateButton}
+                    style = {styles.shoppingCartButtom}
+                    onPress = {() => {
+                        this.orderHandlePressed();
+                    }}
                 >
                     <Image 
-                        source = { cartIcon }
+                        source = { shoppingCartIcon }
                         style = { styles.imgLocation }
                     />
                 </TouchableOpacity>
@@ -304,9 +314,15 @@ const styles = StyleSheet.create({
         paddingTop: 15,
         justifyContent: 'center'
     },
+    shoppingCartButtom: {
+        width: 50,
+        paddingRight: 15,
+        paddingTop: 15,
+    },
     imgLocation: {
         width: 30,
-        height: 30
+        height: 30,
+        marginRight: 15
     },
     searchBox: {
         width: '80%',
