@@ -142,9 +142,9 @@ class OrderDetailView(APIView):
     permission_classes = [permissions.IsAuthenticated]
     
     def post(self, request, format = None):
-        productName = request.data['product_name']
-        orderId = request.data['order_id']
-        quantity = request.data['quantity']
+        productName = self.request.data['product_name']
+        orderId = self.request.data['order_id']
+        quantity = self.request.data['quantity']
         print(orderId)
         productInstance = models.Product.objects.get(name = productName)
         orderInstance = models.Order.objects.get(id = orderId)
@@ -154,39 +154,39 @@ class OrderDetailView(APIView):
     
 class FavoriteView(APIView):
     Serializer_class = serializers.FavoriteSerializer
-    permission_classes = [permissions.AllowAny]
+    permission_classes = [permissions.IsAuthenticated]
     
     def get_product(self, name = None):
         productInstance = models.Product.objects.filter(name = name)
         if len(productInstance) > 0:
             return productInstance[0]
-        print('Not found')
         return -1
     
     def get(self, request, format = None):
         productName = self.request.query_params.get('product-name')
         productInstance = self.get_product(productName)
-        if productName != -1:
+        if productInstance != -1:
             favoriteInstance = models.Favorite.objects.filter(product = productInstance)
+            data = {
+                'isLiked': False
+            }
             if len(favoriteInstance) > 0:
                 data = {
                     'isLiked': True
                 }
                 return Response(data, status = status.HTTP_200_OK)
-            data = {
-                'isLiked': False
-            }
             return Response(data, status = status.HTTP_204_NO_CONTENT)
         return Response('Product was not found!', status = status.HTTP_404_NOT_FOUND)
     
+    
     def post(self, request, format = None):
-        status = request.data['status']
+        isLike = request.data['status']
         productName = request.data['product-name']
-        productInstance = self.get_product(productName)
-        if productInstance != -1:
-            print(status)
-            return Response('OK', status = status.HTTP_200_OK)
-        return Response('Product was not found!', status = status.HTTP_404_NOT_FOUND)
+        productInstance = models.Product.objects.filter(name = productName)
+        favoriteInstance = models.Favorite.objects.filter(product = productInstance, customer = request.user)
+        if isLike == 'false':
+            favoriteInstance.delete()
+        return Response('Deleted!', status = status.HTTP_200_OK)
         
             
         

@@ -69,8 +69,14 @@ class Product extends Component {
 
     async getProductLikeStatus() {
         const itemName = await AsyncStorage.getItem('item-selected');
+        const token = await AsyncStorage.getItem('token');
         if(itemName != null) {
-            axios.get(`${ipAddress}/api/favorite?product-name=${itemName}`)
+            axios.get(`${ipAddress}/api/favorite?product-name=${itemName}`, {
+                headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: `Bearer ${token}`
+                }
+            })
                 .then((response) => {
                     this.setState({
                         isClick: response.data.isLiked
@@ -139,15 +145,37 @@ class Product extends Component {
             })
     }
 
-    heartButtonPressedHandler() {
-        this.setState({
-            isClick: false
+    async heartButtonPressedHandler() {
+        const itemName = await AsyncStorage.getItem('item-selected');
+        const token = await AsyncStorage.getItem('token');
+        if(this.state.isClick === true) {
+            this.setState({
+                isClick: false
+            });
+        }else {
+            this.setState({
+                isClick: true
+            });
+        }
+        console.log(this.state.isClick)
+        axios.post(`${ipAddress}/api/favorite/`, {
+            'status': this.state.isClick,
+            'product-name': itemName
+        }, {
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${token}`
+            }
+        })
+        .then((response) => {
+            console.log('ok')
+        })
+        .catch((error) => {
+            displayAlert('Please sign in !');
         });
-        
     }
 
     renderHeader() {
-        
         return(
             <View style = {styles.headerWrapper}>
                 <TouchableOpacity
@@ -166,10 +194,10 @@ class Product extends Component {
     }
 
     renderFoodInfor() {
-        if(this.state.isClick) {
-            const heartIcon = heartIcon1
+        let  heartIcon = heartIcon2
+        if(this.state.isClick === true) {
+            let heartIcon = heartIcon1
         }
-        const heartIcon = heartIcon2
         return(
             <SafeAreaView>
                 <View style = {styles.foodInforWrapper}>
