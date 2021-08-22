@@ -154,12 +154,13 @@ class OrderDetailView(APIView):
     
 class FavoriteView(APIView):
     Serializer_class = serializers.FavoriteSerializer
-    permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [permissions.AllowAny]
     
     def get_product(self, name = None):
         productInstance = models.Product.objects.filter(name = name)
         if len(productInstance) > 0:
             return productInstance[0]
+        print('Not found')
         return -1
     
     def get(self, request, format = None):
@@ -176,6 +177,17 @@ class FavoriteView(APIView):
                 'isLiked': False
             }
             return Response(data, status = status.HTTP_204_NO_CONTENT)
+        return Response('Product was not found!', status = status.HTTP_404_NOT_FOUND)
+    
+    def post(self, request, format = None):
+        status = request.data['status']
+        productName = request.data['product-name']
+        productInstance = self.get_product(productName)
+        if productInstance != -1:
+            print(status)
+            return Response('OK', status = status.HTTP_200_OK)
+        return Response('Product was not found!', status = status.HTTP_404_NOT_FOUND)
+        
             
         
     

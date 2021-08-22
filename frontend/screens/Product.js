@@ -16,6 +16,8 @@ import {
     backIcon,
     miXao,
     backIconLight,
+    heartIcon1,
+    heartIcon2,
     ipAddress
 } from '../contants';
 // import Heart from "react-animated-heart";
@@ -56,7 +58,6 @@ class Product extends Component {
                     this.setState({
                         item: response.data
                     });
-                    console.log('OK')
                 })
                 .catch((error) => {
                     displayAlert(error);
@@ -66,9 +67,26 @@ class Product extends Component {
         }
     }
 
+    async getProductLikeStatus() {
+        const itemName = await AsyncStorage.getItem('item-selected');
+        if(itemName != null) {
+            axios.get(`${ipAddress}/api/favorite?product-name=${itemName}`)
+                .then((response) => {
+                    this.setState({
+                        isClick: response.data.isLiked
+                    });
+                    console.log(this.state.isClick)
+                })
+                .catch((error) => {
+                    console.log(error);
+                })
+        }
+    }
+
 
     componentDidMount () {
         this.getItem();
+        this.getProductLikeStatus();
     }
 
     changeQuantity = (status) => {
@@ -121,6 +139,13 @@ class Product extends Component {
             })
     }
 
+    heartButtonPressedHandler() {
+        this.setState({
+            isClick: false
+        });
+        
+    }
+
     renderHeader() {
         
         return(
@@ -141,6 +166,10 @@ class Product extends Component {
     }
 
     renderFoodInfor() {
+        if(this.state.isClick) {
+            const heartIcon = heartIcon1
+        }
+        const heartIcon = heartIcon2
         return(
             <SafeAreaView>
                 <View style = {styles.foodInforWrapper}>
@@ -172,8 +201,16 @@ class Product extends Component {
                     </View>
                     <View style = {styles.fontNameWrapper}>
                         <Text style = {styles.foodName}>{this.state.item.name} - {this.state.item.duration}m</Text>
-                        <TouchableOpacity>
-                            <Image></Image>
+                        <TouchableOpacity 
+                            style = {styles.heartButton}
+                            onPress = {() => {
+                                this.heartButtonPressedHandler()
+                            }}
+                        >
+                            <Image
+                                source = {heartIcon}
+                                style = {styles.heartIcon}
+                            ></Image>
                         </TouchableOpacity>
                     </View>
                     <View style = {styles.discriptionWrapper}>
@@ -311,6 +348,14 @@ const styles = StyleSheet.create({
         backgroundColor: '#f2f2f2',
         alignItems: 'center',
         borderRadius: 10
+    },
+    heartIcon: {
+        height: 25,
+        width: 25,
+    },
+    heartButton: {
+        padding: 10,
+        paddingLeft: 20
     }
 });
 
