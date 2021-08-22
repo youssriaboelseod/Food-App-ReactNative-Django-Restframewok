@@ -194,9 +194,9 @@ class Product extends Component {
     }
 
     renderFoodInfor() {
-        let  heartIcon = heartIcon2
+        let heartIcon = heartIcon2
         if(this.state.isClick === true) {
-            let heartIcon = heartIcon1
+            heartIcon = heartIcon1
         }
         return(
             <SafeAreaView>
