@@ -42,3 +42,9 @@ class OrderDetailSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.OrderDetail
         fields = ['order', 'product', 'quantity']
+        
+        
+class FavoriteSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.Favorite
+        fields = ['__all__']

@@ -8,6 +8,8 @@ import {
     FlatList,
     SafeAreaView
 } from "react-native";
+
+// import CheckBox from '@react-native-community/checkbox';
 import {
     backIcon,
     miXao,
@@ -64,7 +66,14 @@ class OrderDelivery extends Component {
     renderCheckOut() {
         return(
             <View style = {styles.checkOutWrapper}>
-
+                <View style={styles.checkboxContainer}>
+                    {/* <CheckBox
+                        value={isSelected}
+                        onValueChange={setSelection}
+                        style={styles.checkbox}
+                    /> */}
+                    <Text style={styles.label}>Do you like React Native?</Text>
+                </View>
             </View>
         );
     }
@@ -144,7 +153,14 @@ const styles = StyleSheet.create({
         backgroundColor: '#FFF',
         borderTopWidth: 1,
         borderColor: '#F0F0F0'
-    }
+    },
+    checkboxContainer: {
+        flexDirection: "row",
+        marginBottom: 20,
+    },
+    checkbox: {
+        alignSelf: "center",
+    },
 });
 
 export default OrderDelivery;

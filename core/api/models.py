@@ -133,3 +133,11 @@ class OrderDetail(models.Model):
         return str(self.order.customer) + '-' + str(self.order.id) + '-' + str(self.product)
     
     
+class Favorite(models.Model):
+    customer = models.ForeignKey(Customer, on_delete = models.CASCADE, related_name = 'favorite_product')
+    product = models.ForeignKey(Product, on_delete = models.CASCADE)
+    
+    def __str__(self):
+        return str(self.customer.email) + '-' + str(self.product.name)
+    
+    

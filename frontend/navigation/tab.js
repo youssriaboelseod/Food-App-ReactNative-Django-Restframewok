@@ -8,7 +8,8 @@ import {
 } from "react-native";
 import { 
     Home,
-    User
+    User,
+    Favorite
 } from "../screens";
 import {
     createBottomTabNavigator,
@@ -61,7 +62,7 @@ const Tabs = () => {
             </Tab.Screen>
             <Tab.Screen
                 name = "Like"
-                component = {Home}
+                component = {Favorite}
                 options={{header: () => null}}
             >
             </Tab.Screen>

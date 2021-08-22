@@ -129,7 +129,6 @@ class OrderView(APIView):
     
     def get(self, request, format = None):
         customerInstance = get_object_or_404(models.Customer, email = request.user)
-        print(request.user)
         try:
             newOrder = models.Order.objects.create(customer = customerInstance)
             newOrder.save()
@@ -151,4 +150,32 @@ class OrderDetailView(APIView):
         orderInstance = models.Order.objects.get(id = orderId)
         newOrderDetail = models.OrderDetail.objects.create(order = orderInstance, quantity = quantity, product = productInstance)
         return Response('Created', status = status.HTTP_201_CREATED)
+    
+    
+class FavoriteView(APIView):
+    Serializer_class = serializers.FavoriteSerializer
+    permission_classes = [permissions.IsAuthenticated]
+    
+    def get_product(self, name = None):
+        productInstance = models.Product.objects.filter(name = name)
+        if len(productInstance) > 0:
+            return productInstance[0]
+        return -1
+    
+    def get(self, request, format = None):
+        productName = self.request.query_params.get('product-name')
+        productInstance = self.get_product(productName)
+        if productName != -1:
+            favoriteInstance = models.Favorite.objects.filter(product = productInstance)
+            if len(favoriteInstance) > 0:
+                data = {
+                    'isLiked': True
+                }
+                return Response(data, status = status.HTTP_200_OK)
+            data = {
+                'isLiked': False
+            }
+            return Response(data, status = status.HTTP_204_NO_CONTENT)
+            
+        
     

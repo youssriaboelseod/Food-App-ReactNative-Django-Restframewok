@@ -18,6 +18,7 @@ import {
     backIconLight,
     ipAddress
 } from '../contants';
+// import Heart from "react-animated-heart";
 
 const displayAlert = (message) => {
     Alert.alert(
@@ -39,7 +40,8 @@ class Product extends Component {
         this.state = {
             item: [],
             quantity: 1,
-            itemName: null
+            itemName: null,
+            isClick: true
         }
     }
 
@@ -63,6 +65,7 @@ class Product extends Component {
             this.props.navigation.navigate('Home', {});
         }
     }
+
 
     componentDidMount () {
         this.getItem();
@@ -119,6 +122,7 @@ class Product extends Component {
     }
 
     renderHeader() {
+        
         return(
             <View style = {styles.headerWrapper}>
                 <TouchableOpacity
@@ -168,6 +172,9 @@ class Product extends Component {
                     </View>
                     <View style = {styles.fontNameWrapper}>
                         <Text style = {styles.foodName}>{this.state.item.name} - {this.state.item.duration}m</Text>
+                        <TouchableOpacity>
+                            <Image></Image>
+                        </TouchableOpacity>
                     </View>
                     <View style = {styles.discriptionWrapper}>
                         <Text style = {styles.discriptionText}>{this.state.item.description}</Text>
