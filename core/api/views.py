@@ -181,12 +181,16 @@ class FavoriteView(APIView):
     
     def post(self, request, format = None):
         isLike = request.data['status']
+        print(isLike)
         productName = request.data['product-name']
         productInstance = models.Product.objects.filter(name = productName)
-        favoriteInstance = models.Favorite.objects.filter(product = productInstance, customer = request.user)
-        if isLike == 'false':
-            favoriteInstance.delete()
-        return Response('Deleted!', status = status.HTTP_200_OK)
+        favoriteInstance = models.Favorite.objects.filter(product = productInstance[0], customer = request.user)
+        if isLike == False:
+            favoriteInstance[0].delete()
+            print('delete')
+            return Response('Deleted!', status = status.HTTP_200_OK)
+        models.Favorite.objects.create(customer = request.user, product = productInstance[0])
+        return Response('Created!', status = status.HTTP_201_CREATED)
         
             
         
