@@ -164,6 +164,7 @@ class FavoriteView(APIView):
     
     def get(self, request, format = None):
         productName = self.request.query_params.get('product-name')
+        print(productName)
         productInstance = self.get_product(productName)
         if productInstance != -1:
             favoriteInstance = models.Favorite.objects.filter(product = productInstance)
@@ -174,18 +175,18 @@ class FavoriteView(APIView):
                 data = {
                     'isLiked': True
                 }
+                print(data)
                 return Response(data, status = status.HTTP_200_OK)
-            return Response(data, status = status.HTTP_204_NO_CONTENT)
+            return Response(data, status = status.HTTP_200_OK)
         return Response('Product was not found!', status = status.HTTP_404_NOT_FOUND)
     
     
     def post(self, request, format = None):
         isLike = request.data['status']
-        print(isLike)
         productName = request.data['product-name']
         productInstance = models.Product.objects.filter(name = productName)
-        favoriteInstance = models.Favorite.objects.filter(product = productInstance[0], customer = request.user)
         if isLike == False:
+            favoriteInstance = models.Favorite.objects.filter(product = productInstance[0], customer = request.user)
             favoriteInstance[0].delete()
             print('delete')
             return Response('Deleted!', status = status.HTTP_200_OK)
