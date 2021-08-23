@@ -20,6 +20,16 @@ import {
 class Favorite extends Component {
     constructor(props) {
         super(props);
+        this.state = {
+            favoriteProducts: [
+                {
+                    name: "1"
+                },
+                {
+                    name: "2"
+                },
+            ]
+        }
     }
 
     renderHeader() {
@@ -38,6 +48,24 @@ class Favorite extends Component {
                 <Text style = {styles.nameWrapper}>Like</Text>
             </View>
         );
+    }
+
+    renderFavoritProducts() {
+        const renderItem = () => {
+            return(
+                <View>
+                    
+                </View>
+            );
+        }
+        <FlatList
+            data = {this.state.favoriteProducts}
+            showsHorizontalScrollIndicator = {false}
+            keyExtractor = {(item) => item.id}
+            renderItem = {renderItem}
+            extraData = {this.state.selectedId}
+            // contentContainerStyle = {{padding: 10}}
+        ></FlatList>
     }
 
     render() {

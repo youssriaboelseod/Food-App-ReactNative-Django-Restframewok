@@ -175,8 +175,6 @@ class FavoriteView(APIView):
                 data = {
                     'isLiked': True
                 }
-                print(data)
-                return Response(data, status = status.HTTP_200_OK)
             return Response(data, status = status.HTTP_200_OK)
         return Response('Product was not found!', status = status.HTTP_404_NOT_FOUND)
     
@@ -192,7 +190,21 @@ class FavoriteView(APIView):
             return Response('Deleted!', status = status.HTTP_200_OK)
         models.Favorite.objects.create(customer = request.user, product = productInstance[0])
         return Response('Created!', status = status.HTTP_201_CREATED)
-        
+    
+    
+class FavoriteProductsView(APIView):
+    permission_classes = [permissions.IsAuthenticated]
+    serializer_class = serializers.FavoriteSerializer
+    
+    
+    def get(self, request, format = None):
+        userInstance = request.user
+        favorites = models.Favorite.objects.filter(customer = userInstance)
+        if len(favorites) > 0:
+            serializer = self.serializer_class(data = favorites, many = True)
+            if serializer.is_valid():
+                return Response(serializer.data, status = status.HTTP_200_OK)
+        return Response('Favorite products not found!', status = status.HTTP_404_NOT_FOUND)                
             
         
     

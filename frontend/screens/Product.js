@@ -283,7 +283,7 @@ const styles = StyleSheet.create({
     },  
     iconBackWrapper: {
         width: 50,
-        marginTop: 10
+        
     },
     nameWrapper: {
         left: 50,
