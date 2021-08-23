@@ -47,4 +47,4 @@ class OrderDetailSerializer(serializers.ModelSerializer):
 class FavoriteSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Favorite
-        fields = ['__all__']
+        fields = ['customer', 'product']

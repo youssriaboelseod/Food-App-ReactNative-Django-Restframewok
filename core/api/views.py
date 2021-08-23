@@ -201,9 +201,11 @@ class FavoriteProductsView(APIView):
         userInstance = request.user
         favorites = models.Favorite.objects.filter(customer = userInstance)
         if len(favorites) > 0:
-            serializer = self.serializer_class(data = favorites, many = True)
-            if serializer.is_valid():
-                return Response(serializer.data, status = status.HTTP_200_OK)
+            data = []
+            for favorite in favorites:
+                data.append(favorite)
+            serializer = self.serializer_class(data, many = True)
+            return Response(serializer.data, status = status.HTTP_200_OK)
         return Response('Favorite products not found!', status = status.HTTP_404_NOT_FOUND)                
             
         

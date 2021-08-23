@@ -9,6 +9,7 @@ urlpatterns = [
     path('order/', views.OrderView.as_view(), name = 'order'),
     path('order-detail/', views.OrderDetailView.as_view(), name = 'order-detail'),
     path('favorite/', views.FavoriteView.as_view(), name = 'favorite'),
+    path('favorites/', views.FavoriteProductsView.as_view(), name = 'favorites'),
     
     # authentication
     
