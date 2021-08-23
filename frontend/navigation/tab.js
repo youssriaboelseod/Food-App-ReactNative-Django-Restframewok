@@ -37,7 +37,7 @@ const Tabs = () => {
                         iconName  = homeIcon;
                     } else if (route.name === 'Search') {
                         iconName = searchIcon;
-                    } else if (route.name === 'Like') {
+                    } else if (route.name === 'Likes') {
                         iconName = likeIcon;
                     } else if (route.name === 'User') {
                         iconName = userIcon;
@@ -61,7 +61,7 @@ const Tabs = () => {
             >
             </Tab.Screen>
             <Tab.Screen
-                name = "Like"
+                name = "Likes"
                 component = {Favorite}
                 options={{header: () => null}}
             >

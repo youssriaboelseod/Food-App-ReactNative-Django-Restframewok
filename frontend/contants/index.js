@@ -14,6 +14,7 @@ const shoppingCartIcon = require('../assets/icons/shopping-cart.png')
 const backIconLight = require('../assets/icons/back-icon-light.png');
 const heartIcon1 = require('../assets/icons/heart-icon-1.png');
 const heartIcon2 = require('../assets/icons/heart-icon-2.png');
+const storeIcon = require('../assets/icons/store-icon.png');
 //IP address
 const ipAddress = 'http://192.168.1.4:8000';
 
@@ -41,5 +42,6 @@ export {
     backIconLight,
     heartIcon1,
     heartIcon2,
+    storeIcon,
     ipAddress
 }
