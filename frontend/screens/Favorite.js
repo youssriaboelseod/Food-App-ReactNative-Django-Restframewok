@@ -37,36 +37,47 @@ const displayAlert = (message) => {
         ])
 }
 
-
 class Favorite extends Component {
     constructor(props) {
         super(props);
         this.state = {
             haveFavoriteProducts: false,
+            isFetching: false,
             favoriteProducts: []
         }
     }
 
     getFavoriteProducts = async () => {
-        console.log('here')
         const token = await AsyncStorage.getItem('token');
-        axios.get(`${ipAddress}/api/favorites/`, {
-            headers: {
+        if(token != null) {
+            axios.get(`${ipAddress}/api/favorites/`, {
                 headers: {
-                    'Content-Type': 'application/json',
-                    Authorization: `Bearer ${token}`
+                    headers: {
+                        'Content-Type': 'application/json',
+                        Authorization: `Bearer ${token}`
+                    }
                 }
-            }
-        })
-        .then((response) => response.json())
-        .then((data) => {
-            this.setState({
-                haveFavoriteProducts: true
+            })
+            .then((response) => {
+                this.setState({
+                    haveFavoriteProducts: true,
+                    isFetching: false
+                })
+            })
+            .catch((error) => {
+                displayAlert('Please sign in!');
+                this.setState({
+                    isFetching: false
+                })
             });
-            console.log(data);
-        })
-        .catch((error) => {
-            displayAlert('Please sign in!');
+        }
+    }
+
+    onRefresh = () => {
+        this.setState({
+            isFetching: true
+        }, () => {
+            this.getFavoriteProducts();
         });
     }
 
@@ -117,11 +128,33 @@ class Favorite extends Component {
     }
 
     renderFavoritProducts() {
-        const renderItem = () => {
+        const renderEmptyFavoriteProducts = () => {
             return(
-                <View>
+                <View style = {styles.emptyStoreWrapper}>
+                    <Image
+                        source = {storeIcon}
+                        style = {styles.storeIcon}
+                    ></Image>
+                    <Text
+                        style = {{
+                            marginTop: 20,
+                            fontSize: 20,
+                            fontWeight: 'bold'
+                        }}
+                    >Give some love!</Text>
+                    <Text
+                        style = {{
+                            marginTop: 15,
+                            fontSize: 15,
+                        }}
+                    >Tap on the hearts to save your favorite products</Text>
                 </View>
             );
+        }
+        const renderItem = ({item}) => {
+            <View>
+                <Text>Hello</Text>
+            </View>
         }
         return(
             <FlatList
@@ -130,30 +163,21 @@ class Favorite extends Component {
                 keyExtractor = {(item) => item.id}
                 renderItem = {renderItem}
                 extraData = {this.state.selectedId}
-                // contentContainerStyle = {{padding: 10}}
+                ListEmptyComponent = {renderEmptyFavoriteProducts}
+                onRefresh = {() => {
+                    this.onRefresh()
+                }}
+                refreshing = {this.state.isFetching}
             ></FlatList>
         );
 
-    }
-
-    renderMainView() {
-        console.log(this.state.favoriteProducts.length)
-        if(this.state.haveFavoriteProducts === true) {
-            return (
-                this.renderFavoritProducts()
-            );
-        } else {
-            return (
-                this.renderEmptyFavoriteProducts()
-            );
-        }
     }
 
     render() {
         return(
             <SafeAreaView style = {styles.container}>
                 {this.renderHeader()}
-                {this.renderMainView()}
+                {this.renderFavoritProducts()}
             </SafeAreaView>
         );
     }
@@ -171,7 +195,7 @@ const styles = StyleSheet.create({
         height: 65
     },  
     nameWrapper: {
-        left: 160,
+        left: 155,
         fontSize: 25,
         color: '#FFF'
     },
