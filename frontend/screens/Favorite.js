@@ -156,10 +156,19 @@ class Favorite extends Component {
             return(
                 <View style = {styles.favoriteProduct}>
                     <View style = {styles.imageFavoProductWrapper}>
-                        <Image
-                            source = {miXao}
-                            style = {styles.favoProductImage}
-                        ></Image>
+                        <TouchableOpacity
+                            onPress = {async () => {
+                                await AsyncStorage.setItem('item-selected', item.name);
+                                this.props.navigation.navigate('Product', {
+
+                                })
+                            }}
+                        >
+                            <Image
+                                source = {miXao}
+                                style = {styles.favoProductImage}
+                            ></Image>
+                        </TouchableOpacity>
                     </View>
                     <View style = {styles.inforWrapper}>
                         <Text style = {styles.inforText}>{item.name} - {item.duration}m</Text>
@@ -266,8 +275,10 @@ const styles = StyleSheet.create({
         fontSize: 15
     },
     heartIconWrapper: {
+        marginRight: 5,
         justifyContent: 'flex-end',
-        left: 80
+        alignItems: 'flex-end',
+        flex: 1
     },
     heartIcon: {
         height: 30,
