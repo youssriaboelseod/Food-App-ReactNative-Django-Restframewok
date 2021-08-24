@@ -50,9 +50,19 @@ class Setting extends Component {
         return(
             <View style = {styles.accountSettingWrapper}>
                 <View
-                    style = {{height: 50}}
+                    style = {{height: 40, justifyContent: 'center', paddingLeft: 7}}
                 >
-                    <Text style = {styles.settingText}>Hello</Text>
+                    <Text style = {styles.settingText}>Account Settings</Text>
+                </View>
+                <View style = {styles.accountSettingDetailWrapper}>
+                    <TouchableOpacity>
+                        <Text style = {styles.settingText}>Information and Contact</Text>
+                    </TouchableOpacity>
+                </View>
+                <View style = {styles.accountSettingDetailWrapper}>
+                    <TouchableOpacity>
+                        <Text style = {styles.settingText}>Password</Text>
+                    </TouchableOpacity>
                 </View>
             </View>
         );
@@ -98,10 +108,18 @@ const styles = StyleSheet.create({
     accountSettingWrapper: {
         flexDirection: 'column',
         width: '100%',
-        height: 150
+        height: 140
     },
     settingText: {
-        
+        fontSize: 16
+    },
+    accountSettingDetailWrapper: {
+        height: 50,
+        backgroundColor: '#FFF',
+        borderTopWidth: 1,
+        borderTopColor: '#E8E8E8',
+        justifyContent: 'center',
+        paddingLeft: 7
     }
 })
 
