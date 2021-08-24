@@ -107,20 +107,34 @@ class DetailProductCategory(APIView):
     serializer_class = serializers.ProductSerializer
     permission_classes = [permissions.AllowAny]
     
-    def get_product_object(self, name = None):
+    def get_product_object_by_name(self, name = None):
         productInstance = models.Product.objects.filter(name = name)
+        if len(productInstance) > 0:
+            return productInstance[0]
+        return -1
+    
+    def get_product_object_by_id(self, pk = None):
+        productInstance = models.Product.objects.filter(id = pk)
         if len(productInstance) > 0:
             return productInstance[0]
         return -1
     
     def get(self, request, format = None):
         productName = self.request.query_params.get('name')
-        productInstance = self.get_product_object(productName)
-        print('here')
-        if productInstance != -1:
-            serializer = self.serializer_class(productInstance)
-            return Response(serializer.data, status = status.HTTP_200_OK)
-        return Response('Product not found!', status = status.HTTP_404_NOT_FOUND)
+        if productName != None:
+            productInstance = self.get_product_object_by_name(productName)
+            if productInstance != -1:
+                serializer = self.serializer_class(productInstance)
+                return Response(serializer.data, status = status.HTTP_200_OK)
+            return Response('Product not found!', status = status.HTTP_404_NOT_FOUND)
+        else:
+            productId = self.request.query_params.get('id')
+            print(productId)
+            productInstance = self.get_product_object_by_id(productId)
+            if productInstance != -1:
+                serializer = self.serializer_class(productInstance)
+                return Response(serializer.data, status = status.HTTP_200_OK)
+            return Response('Product not found!', status = status.HTTP_404_NOT_FOUND)
     
     
 class OrderView(APIView):
@@ -194,14 +208,14 @@ class FavoriteView(APIView):
     
 class FavoriteProductsView(APIView):
     permission_classes = [permissions.IsAuthenticated]
-    serializer_class = serializers.FavoriteSerializer    
+    serializer_class = serializers.ProductSerializer    
     
     def get(self, request, format = None):
         userInstance = request.user
         favorites = models.Favorite.objects.filter(customer = userInstance)
         data = []
         for favorite in favorites:
-            data.append(favorite)
+            data.append(favorite.product)
         serializer = self.serializer_class(data, many = True)
         return Response(serializer.data, status = status.HTTP_200_OK)
             

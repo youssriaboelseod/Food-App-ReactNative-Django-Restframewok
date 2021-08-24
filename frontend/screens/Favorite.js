@@ -20,6 +20,7 @@ import {
     miXao,
     backIconLight,
     storeIcon,
+    heartIcon1,
     ipAddress
 } from '../contants';
 
@@ -41,9 +42,10 @@ class Favorite extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            selectedId: '',
             haveFavoriteProducts: false,
             isFetching: false,
-            favoriteProducts: []
+            favoriteProducts: [],
         }
     }
 
@@ -52,17 +54,16 @@ class Favorite extends Component {
         if(token != null) {
             axios.get(`${ipAddress}/api/favorites/`, {
                 headers: {
-                    headers: {
-                        'Content-Type': 'application/json',
-                        Authorization: `Bearer ${token}`
-                    }
+                    'Content-Type': 'application/json',
+                    Authorization: `Bearer ${token}`
                 }
             })
             .then((response) => {
                 this.setState({
-                    haveFavoriteProducts: true,
+                    favoriteProducts: [...response.data],
                     isFetching: false
-                })
+                });
+                console.log(this.state.favoriteProducts);
             })
             .catch((error) => {
                 displayAlert('Please sign in!');
@@ -152,9 +153,26 @@ class Favorite extends Component {
             );
         }
         const renderItem = ({item}) => {
-            <View>
-                <Text>Hello</Text>
-            </View>
+            return(
+                <View style = {styles.favoriteProduct}>
+                    <View style = {styles.imageFavoProductWrapper}>
+                        <Image
+                            source = {miXao}
+                            style = {styles.favoProductImage}
+                        ></Image>
+                    </View>
+                    <View style = {styles.inforWrapper}>
+                        <Text style = {styles.inforText}>{item.name} - {item.duration}m</Text>
+                        <Text style = {styles.descriptionText}>{item.description}</Text>
+                    </View>
+                    <View style = {styles.heartIconWrapper}>
+                        <Image
+                            source = {heartIcon1}
+                            style = {styles.heartIcon}
+                        ></Image>
+                    </View>
+                </View>
+            );
         }
         return(
             <FlatList
@@ -220,6 +238,40 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         flexDirection: 'column',
         flex: 1
+    }, 
+    favoriteProduct: {
+        width: '100%',
+        backgroundColor: '#FFF',
+        height: 120,
+        marginTop: 10,
+        flexDirection: 'row'
+    },
+    imageFavoProductWrapper: {
+
+    },
+    favoProductImage: {
+        height: '100%',
+        width: 120
+    },
+    inforWrapper: {
+        marginLeft: 20,
+        marginTop: 5,
+        justifyContent: 'flex-start',
+        flexDirection: 'column'
+    },
+    inforText: {
+        fontSize: 18
+    },
+    descriptionText: {
+        fontSize: 15
+    },
+    heartIconWrapper: {
+        justifyContent: 'flex-end',
+        left: 80
+    },
+    heartIcon: {
+        height: 30,
+        width: 30
     }
 });
 

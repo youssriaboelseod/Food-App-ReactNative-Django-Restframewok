@@ -69,6 +69,7 @@ class Home extends Component {
         axios.get(ipAddress + `/api/category-products?name=${categoryName}`)
         .then((response) => {
             if(response.status === 200) {
+                console.log(response.data)
                 this.setState({
                     products: [...response.data]
                 });
