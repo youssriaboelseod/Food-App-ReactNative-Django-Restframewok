@@ -14,26 +14,95 @@ import {
     FlatList
 } from "react-native";
 
-// import {
-
-// } from '../contants';
+import {
+    backIcon,
+    miXao,
+    backIconLight,
+    storeIcon,
+    heartIcon1,
+    ipAddress
+} from '../contants';
 
 class Setting extends Component {
     constructor(props) {
         super(props);
     }
 
+    renderHeader() {
+        return(
+            <View style = {styles.headerWrapper}>
+                <TouchableOpacity
+                    style = {styles.iconBackWrapper}
+                    onPress={() => this.props.navigation.goBack()}
+                >
+                    <Image
+                        source = {backIcon}
+                        resizeMode = 'contain'
+                        style = {styles.backIcon}
+                    ></Image>
+                </TouchableOpacity>
+                <Text style = {styles.nameWrapper}>Settings</Text>
+            </View>
+        );
+    }
+
+    renderAccountSetting() {
+        return(
+            <View style = {styles.accountSettingWrapper}>
+                <View
+                    style = {{height: 50}}
+                >
+                    <Text style = {styles.settingText}>Hello</Text>
+                </View>
+            </View>
+        );
+    }
+
+
     render() {
         return(
-            <View>
-                <Text>Setting</Text>
-            </View>
+            <SafeAreaView style = {styles.container}>
+                {this.renderHeader()}
+                {this.renderAccountSetting()}
+            </SafeAreaView>
         );
     }
 }
 
 const styles = StyleSheet.create({
-
+    container: {
+        flex: 1
+    },
+    headerWrapper: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        backgroundColor: '#FFF',
+        height: 65
+    },  
+    nameWrapper: {
+        left: 140,
+        fontSize: 22,
+        color: '#000'
+    },
+    backIcon: {
+        width: 25,
+        height: 25
+    },
+    editText: {
+        fontSize: 18,
+        color: '#FFF'
+    },
+    editButtomWrapper: {
+        left: 180
+    },
+    accountSettingWrapper: {
+        flexDirection: 'column',
+        width: '100%',
+        height: 150
+    },
+    settingText: {
+        
+    }
 })
 
 export default Setting;

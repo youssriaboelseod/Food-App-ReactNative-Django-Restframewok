@@ -230,13 +230,6 @@ const styles = StyleSheet.create({
         width: 25,
         height: 25
     },
-    editText: {
-        fontSize: 18,
-        color: '#FFF'
-    },
-    editButtomWrapper: {
-        left: 180
-    },
     storeIcon: {
         height: 70,
         width: 70,
