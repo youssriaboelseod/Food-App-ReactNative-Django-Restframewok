@@ -1,15 +1,20 @@
 import React, { Component } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {
-  SafeAreaView,
-  StyleSheet,
-  Text,
-  View,
-  TextInput,
-  TouchableOpacity,
-  Alert
+    SafeAreaView,
+    StyleSheet,
+    Text,
+    View,
+    TextInput,
+    TouchableOpacity,
+    Image,
+    Alert,
+    Dimensions
 } from 'react-native';
 import {
+    userIcon,
+    backIconLight,
+    settingIcon,
     ipAddress
 } from '../contants';
 
@@ -150,22 +155,39 @@ class User extends Component {
         );
     }
 
+    renderHeader() {
+        return(
+            <View style = {styles.headerWrapper}>
+                <View style = {styles.avatarWrapper}>
+                    <Image
+                        style = {styles.avatar}
+                        source = {userIcon}
+                    ></Image>
+                </View>
+                <Text style = {styles.loginTitle}>{this.state.emailLogin}</Text>
+                <View>
+                    <TouchableOpacity 
+                        style = {styles.settingWrapper}
+                        onPress = {() => {
+                            this.props.navigation.navigate('Setting', {
+                                
+                            })
+                        }}
+                    >
+                        <Image
+                            style = {styles.settingIcon}
+                            source = {settingIcon}
+                        ></Image>
+                    </TouchableOpacity>
+                </View>
+            </View>
+        );
+    }
+
     renderUserView() {
         return(
             <SafeAreaView style = {styles.container}>
-                <View style = {styles.titleWrapper}>
-                    <Text style = {styles.loginTitle}>Welcome {this.state.emailLogin}</Text>
-                </View>
-                <View style = {styles.loginWrapper}>
-                    <TouchableOpacity 
-                        style = {styles.buttonLogin}
-                        onPress = {() => {
-                            this.handleSignOuPressed()
-                        }}
-                    >
-                        <Text style = {{fontSize: 20, fontWeight: 'bold'}}>Sign out</Text>
-                    </TouchableOpacity>
-                </View>
+                {this.renderHeader()}
             </SafeAreaView>
         );
         
@@ -174,6 +196,7 @@ class User extends Component {
     renderMainView() {
         if(this.state.isSigned) {
             return(
+                
                 this.renderUserView()
             );
         } else {
@@ -196,14 +219,37 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: '#f5f5ef',
-        justifyContent: 'center'
+        // justifyContent: 'center'
+    },
+    headerWrapper: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'flex-start',
+        backgroundColor: '#ff7733',
+        height: 100
+    },  
+    nameWrapper: {
+        left: 155,
+        fontSize: 25,
+        color: '#FFF'
+    },
+    backIcon: {
+        width: 25,
+        height: 25
+    },
+    editText: {
+        fontSize: 18,
+        color: '#FFF'
+    },
+    editButtomWrapper: {
+        left: 180
     },
     titleWrapper: {
         marginBottom: 20,
         alignItems: 'center'
     },
     loginTitle: {
-        fontSize: 30,
+        fontSize: 22,
         fontWeight: 'bold'
     },
     loginWrapper: {
@@ -234,6 +280,22 @@ const styles = StyleSheet.create({
     },
     registerText: {
         fontSize: 15
+    },
+    avatarWrapper: {
+        borderRadius: Math.round(Dimensions.get('window').width + Dimensions.get('window').height) / 2,
+        width: 75,
+        height: 75,
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginRight: 20,
+        marginLeft: 10
+    },
+    settingIcon: {
+        width: 22,
+        height: 22
+    },
+    settingWrapper: {
+        marginLeft: 10
     }
 });
 
