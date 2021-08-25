@@ -1,5 +1,5 @@
 import axios from "axios";
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import AsyncStorage, { useAsyncStorage } from '@react-native-async-storage/async-storage';
 import React, {  Component } from "react";
 import {
     View,
@@ -74,6 +74,18 @@ class Setting extends Component {
                         }}
                     >
                         <Text style = {styles.settingText}>Password</Text>
+                    </TouchableOpacity>
+                </View>
+                <View style = {styles.accountSettingDetailWrapper}>
+                    <TouchableOpacity
+                        onPress = {async () => {
+                            console.log('Press')
+                            await AsyncStorage.setItem('token', '');
+                            const token = await AsyncStorage.getItem('token');
+                            console.log(token);
+                        }}
+                    >
+                        <Text style = {styles.settingText}>Sign out</Text>
                     </TouchableOpacity>
                 </View>
             </View>

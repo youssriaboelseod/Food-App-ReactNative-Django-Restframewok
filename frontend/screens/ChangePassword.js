@@ -24,10 +24,24 @@ import {
     ipAddress
 } from '../contants';
 
+const displayAlert = (message) => {
+    Alert.alert(
+        "Notification",
+        message,
+        [
+            {
+            text: "Cancel",
+            
+            style: "cancel"
+            },
+            { text: "OK"}
+        ])
+}
+
 class ChangePassword extends Component {
     constructor(props) {
         super(props);
-        this.setState = {
+        this.state = {
             password: '',
             confirmPassword: ''
         }
@@ -53,6 +67,37 @@ class ChangePassword extends Component {
         );
     }
 
+    async saveButtomHandlePressed() {
+        const token = await AsyncStorage.getItem('token');
+        if(this.state.password === this.state.confirmPassword) {
+            axios.post(`${ipAddress}/api/update-password/`, {
+                pass: this.state.password
+            }, {
+                headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: `Bearer ${token}`
+                }
+            })
+            .then(async (response) => {
+                displayAlert('Your password was updated');
+                this.setState({
+                    password: '',
+                    confirmPassword: ''
+                });
+                await AsyncStorage.setItem('token', '');
+            })
+            .catch((error) => {
+                displayAlert('Error')
+            })
+        } else {
+            displayAlert('Your password is not match!');
+            this.setState({
+                password: '',
+                confirmPassword: ''
+            });
+        }
+    }
+
     renderMainView() {
         return(
             <View style = {styles.container}> 
@@ -61,6 +106,7 @@ class ChangePassword extends Component {
                 </View>
                 <View style = {styles.changePasswordWrapper}>
                     <TextInput
+                        secureTextEntry = {true}
                         placeholder = 'New password'
                         style = {styles.textInput}
                         onChangeText = {(text) => {
@@ -68,18 +114,31 @@ class ChangePassword extends Component {
                                 password: text
                             });
                         }}
+                        value = {this.state.password}
                     ></TextInput>
                 </View>
                 <View style = {styles.changePasswordWrapper}>
                     <TextInput
                         placeholder = 'Confirm password'
                         style = {styles.textInput}
+                        secureTextEntry = {true}
                         onChangeText = {(text) => {
                             this.setState({
                                 confirmPassword: text
                             });
                         }}
+                        value = {this.state.confirmPassword}
                     ></TextInput>
+                </View>
+                <View style = {styles.saveButton}>
+                    <TouchableOpacity
+                        onPress = {() => {
+                            this.saveButtomHandlePressed();
+                        }}
+                        style = {{width: '100%', justifyContent: 'center', alignItems: 'center'}}
+                    >
+                        <Text style = {{fontSize: 16}}>Save</Text>
+                    </TouchableOpacity>
                 </View>
             </View>
         );
@@ -133,6 +192,15 @@ const styles = StyleSheet.create({
     textInput: {
         fontSize: 16,
         paddingLeft: 7
+    },
+    saveButton: {
+        width: '100%',
+        height: 40,
+        backgroundColor: '#ff7733',
+        justifyContent: 'center',
+        alignItems: 'center',
+        alignSelf: 'center',
+        marginTop: 10
     }
 });
 

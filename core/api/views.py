@@ -64,7 +64,7 @@ class UpdatePasswordView(APIView):
     def post(self, request, format = None):
         try:
             newPassword = request.data['pass']
-            userInstance = request.user.email
+            userInstance = request.user
             userInstance.set_password(newPassword)
             userInstance.save()
             return Response({'mes': 'Your password was updated!'}, status = status.HTTP_200_OK)
