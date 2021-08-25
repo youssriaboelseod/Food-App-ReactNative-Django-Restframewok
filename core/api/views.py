@@ -57,6 +57,21 @@ class RegisterView(APIView):
             return Response('Created new account!', status = status.HTTP_201_CREATED)
         return Response(serializer.errors, status = status.HTTP_400_BAD_REQUEST)
     
+    
+class UpdatePasswordView(APIView):
+    permission_classes = [permissions.IsAuthenticated]
+    
+    def post(self, request, format = None):
+        try:
+            newPassword = request.data['pass']
+            userInstance = request.user.email
+            userInstance.set_password(newPassword)
+            userInstance.save()
+            return Response({'mes': 'Your password was updated!'}, status = status.HTTP_200_OK)
+        except:
+            return Response({'error': 'We are having some errors, please try later!'}, status = status.HTTP_400_BAD_REQUEST)
+        
+    
 
 class ListCategoryView(APIView):
     serializer_class = serializers.CategorySerializer

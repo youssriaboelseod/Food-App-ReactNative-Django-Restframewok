@@ -48,3 +48,8 @@ class FavoriteSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Favorite
         fields = ['customer', 'product', 'id']
+        
+        
+class PasswordSerializer(serializers.Serializer):
+    newPass1 = serializers.CharField()
+    newPass2 = serializers.CharField()
