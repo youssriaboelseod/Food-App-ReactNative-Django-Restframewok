@@ -108,7 +108,7 @@ class User extends Component {
 
     renderSignedView() {
         return(
-            <SafeAreaView style = {styles.container}>
+            <SafeAreaView style = {styles.containerSignIn}>
                 <View style = {styles.titleWrapper}>
                     <Text style = {styles.loginTitle}>Sign in to Food App</Text>
                 </View>
@@ -196,7 +196,6 @@ class User extends Component {
     renderMainView() {
         if(this.state.isSigned) {
             return(
-                
                 this.renderUserView()
             );
         } else {
@@ -220,6 +219,11 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: '#f5f5ef',
         // justifyContent: 'center'
+    },
+    containerSignIn: {
+        flex: 1,
+        backgroundColor: '#f5f5ef',
+        justifyContent: 'center'
     },
     headerWrapper: {
         flexDirection: 'row',

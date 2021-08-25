@@ -13,6 +13,8 @@ import {
     OrderDelivery,
     Register,
     User,
+    ChangePassword,
+    Information,
     Setting
 } from "./screens";
 import Tabs from "./navigation/tab.js";
@@ -52,6 +54,16 @@ const App = () => {
                 <Stack.Screen
                     name = 'Setting'
                     component = {Setting}
+                    options={{header: () => null}}
+                ></Stack.Screen>
+                <Stack.Screen
+                    name = 'ChangePassword'
+                    component = {ChangePassword}
+                    options={{header: () => null}}
+                ></Stack.Screen>
+                <Stack.Screen
+                    name = 'Information'
+                    component = {Information}
                     options={{header: () => null}}
                 ></Stack.Screen>
             </Stack.Navigator>

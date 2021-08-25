@@ -5,6 +5,8 @@ import User from './User.js';
 import Register  from "./Register.js";
 import Favorite from "./Favorite.js";
 import Setting from "./Setting.js";
+import ChangePassword from './ChangePassword.js';
+import Information from './Information.js';
 
 export {
     Home,
@@ -13,5 +15,7 @@ export {
     Register,
     Favorite,
     User,
+    ChangePassword,
+    Information,
     Setting
 }

@@ -11,7 +11,8 @@ import {
     Animated,
     ImageStore,
     Alert,
-    FlatList
+    FlatList,
+    TextInput
 } from "react-native";
 
 import {
@@ -23,9 +24,13 @@ import {
     ipAddress
 } from '../contants';
 
-class Setting extends Component {
+class ChangePassword extends Component {
     constructor(props) {
         super(props);
+        this.setState = {
+            password: '',
+            confirmPassword: ''
+        }
     }
 
     renderHeader() {
@@ -41,51 +46,50 @@ class Setting extends Component {
                         style = {styles.backIcon}
                     ></Image>
                 </TouchableOpacity>
-                <Text style = {styles.nameWrapper}>Settings</Text>
+                <View>
+                    <Text style = {styles.nameWrapper}>Password</Text>
+                </View>
             </View>
         );
     }
 
-    renderAccountSetting() {
+    renderMainView() {
         return(
-            <View style = {styles.accountSettingWrapper}>
-                <View
-                    style = {{height: 40, justifyContent: 'center', paddingLeft: 7}}
-                >
-                    <Text style = {styles.settingText}>Account Settings</Text>
+            <View style = {styles.container}> 
+                <View style = {styles.titleWrapper}>
+                    <Text style = {styles.textStyle}>Type in New Password</Text>
                 </View>
-                <View style = {styles.accountSettingDetailWrapper}>
-                    <TouchableOpacity
-                        onPress = {() => {
-                            this.props.navigation.navigate('Information', {
-
+                <View style = {styles.changePasswordWrapper}>
+                    <TextInput
+                        placeholder = 'New password'
+                        style = {styles.textInput}
+                        onChangeText = {(text) => {
+                            this.setState({
+                                password: text
                             });
                         }}
-                    >
-                        <Text style = {styles.settingText}>Information and Contact</Text>
-                    </TouchableOpacity>
+                    ></TextInput>
                 </View>
-                <View style = {styles.accountSettingDetailWrapper}>
-                    <TouchableOpacity
-                        onPress = {() => {
-                            this.props.navigation.navigate('ChangePassword', {
-
+                <View style = {styles.changePasswordWrapper}>
+                    <TextInput
+                        placeholder = 'Confirm password'
+                        style = {styles.textInput}
+                        onChangeText = {(text) => {
+                            this.setState({
+                                confirmPassword: text
                             });
                         }}
-                    >
-                        <Text style = {styles.settingText}>Password</Text>
-                    </TouchableOpacity>
+                    ></TextInput>
                 </View>
             </View>
         );
     }
-
 
     render() {
         return(
-            <SafeAreaView style = {styles.container}>
+            <SafeAreaView>
                 {this.renderHeader()}
-                {this.renderAccountSetting()}
+                {this.renderMainView()}
             </SafeAreaView>
         );
     }
@@ -93,7 +97,8 @@ class Setting extends Component {
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1
+        flexDirection: 'column',
+        height: 140
     },
     headerWrapper: {
         flexDirection: 'row',
@@ -102,7 +107,7 @@ const styles = StyleSheet.create({
         height: 65
     },  
     nameWrapper: {
-        left: 140,
+        left: 130,
         fontSize: 22,
         color: '#000'
     },
@@ -110,29 +115,25 @@ const styles = StyleSheet.create({
         width: 25,
         height: 25
     },
-    editText: {
-        fontSize: 18,
-        color: '#FFF'
+    titleWrapper: {
+        height: 40,
+        paddingTop: 7,
+        paddingLeft: 7
     },
-    editButtomWrapper: {
-        left: 180
-    },
-    accountSettingWrapper: {
-        flexDirection: 'column',
-        width: '100%',
-        height: 140
-    },
-    settingText: {
+    textStyle: {
         fontSize: 16
     },
-    accountSettingDetailWrapper: {
+    changePasswordWrapper: {
         height: 50,
         backgroundColor: '#FFF',
         borderTopWidth: 1,
         borderTopColor: '#E8E8E8',
         justifyContent: 'center',
+    },
+    textInput: {
+        fontSize: 16,
         paddingLeft: 7
     }
-})
+});
 
-export default Setting;
+export default ChangePassword;
