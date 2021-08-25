@@ -71,7 +71,18 @@ class User extends Component {
             });
     }
 
+    static getDerivedStateFromProps(props, state) {
+        if(props.route.params != null) {
+            if(props.route.params.isSignedIn === false) {
+                state.isSigned = false
+            }
+            props.route.params = null;
+        }
+        return true;
+    }
+
     componentDidMount() {
+        console.log('Component did Mount')
         this.middleWare();
     }
 

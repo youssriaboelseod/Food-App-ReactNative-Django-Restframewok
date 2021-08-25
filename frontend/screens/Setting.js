@@ -82,7 +82,9 @@ class Setting extends Component {
                             console.log('Press')
                             await AsyncStorage.setItem('token', '');
                             const token = await AsyncStorage.getItem('token');
-                            console.log(token);
+                            this.props.navigation.navigate('User', {
+                                isSignedIn: false
+                            })
                         }}
                     >
                         <Text style = {styles.settingText}>Sign out</Text>
