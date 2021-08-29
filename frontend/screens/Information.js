@@ -25,18 +25,60 @@ import {
     ipAddress
 } from '../contants';
 
+const displayAlert = (message) => {
+    Alert.alert(
+        "Notification",
+        message,
+        [
+            {
+            text: "Cancel",
+            onPress: () => console.log("Cancel Pressed"),
+            style: "cancel"
+            },
+            { text: "OK", onPress: () => console.log("OK Pressed") }
+        ])
+}
+
 class Information extends Component {
     constructor(props) {
         super(props);
+        this.state = {
+            username: '',
+            email: '',
+            first_name: ''
+        }
     }
 
     async getUserInformation() {
-        const token = AsyncStorage.getItem('token');
-        axios.get(`${ipAddress}/api/`)
+        const token = await AsyncStorage.getItem('token');
+        axios.get(`${ipAddress}/api/user/`, {
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${token}`
+            }
+        })
+        .then((response) => {
+            this.setState({
+                username: response.data['user_name'],
+                email: response.data['email'],
+                first_name: response.data['first_name']
+            });
+        })
+        .catch((erorr) => {
+            displayAlert('We have some problems. Please try again!');
+        });
     }
 
     componentDidMount() {
         this.getUserInformation();
+    }
+
+    handleChangeFirstName() {
+        console.log('handleChangeFirstName');
+    }
+
+    handleChangeEmail() {
+        console.log('handleChangeEmail');
     }
 
     renderHeader() {
@@ -84,7 +126,12 @@ class Information extends Component {
                 <View style = {styles.secondWrapper}>
                     <View style = {styles.settingDetailWrapper}>
                         <Text style = {styles.textStyle}>Name</Text>
-                        <TouchableOpacity  style = {styles.btnChangeAvt}>
+                        <TouchableOpacity  
+                            style = {styles.btnChangeAvt}
+                            onPress = {() => {
+                                this.handleChangeFirstName();
+                            }}    
+                        >
                             <Text style = {styles.textStyle}>...FirstName</Text>
                             <Image
                                 style = {{height: 20, width: 20, marginLeft: 15}}
@@ -94,7 +141,12 @@ class Information extends Component {
                     </View>
                     <View style = {styles.settingDetailWrapper}>
                         <Text style = {styles.textStyle}>Email</Text>
-                        <TouchableOpacity style = {styles.btnChangeAvt}>
+                        <TouchableOpacity 
+                            style = {styles.btnChangeAvt}
+                            onPress = {() => {
+                                this.handleChangeEmail();
+                            }}  
+                        >
                             <Text style = {styles.textStyle}>...Email</Text>
                             <Image
                                 style = {{height: 20, width: 20, marginLeft: 15}}
