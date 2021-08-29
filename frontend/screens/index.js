@@ -7,6 +7,7 @@ import Favorite from "./Favorite.js";
 import Setting from "./Setting.js";
 import ChangePassword from './ChangePassword.js';
 import Information from './Information.js';
+import ChangeInfor from './ChangeInfor.js';
 
 export {
     Home,
@@ -17,5 +18,6 @@ export {
     User,
     ChangePassword,
     Information,
-    Setting
+    Setting,
+    ChangeInfor
 }

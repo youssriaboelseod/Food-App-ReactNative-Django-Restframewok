@@ -15,7 +15,8 @@ import {
     User,
     ChangePassword,
     Information,
-    Setting
+    Setting,
+    ChangeInfor
 } from "./screens";
 import Tabs from "./navigation/tab.js";
 import 'react-native-gesture-handler';
@@ -64,6 +65,11 @@ const App = () => {
                 <Stack.Screen
                     name = 'Information'
                     component = {Information}
+                    options={{header: () => null}}
+                ></Stack.Screen>
+                <Stack.Screen
+                    name = 'ChangeInformation'
+                    component = {ChangeInfor}
                     options={{header: () => null}}
                 ></Stack.Screen>
             </Stack.Navigator>

@@ -73,12 +73,10 @@ class Information extends Component {
         this.getUserInformation();
     }
 
-    handleChangeFirstName() {
-        console.log('handleChangeFirstName');
-    }
-
-    handleChangeEmail() {
-        console.log('handleChangeEmail');
+    handleChangeInformation(status) {
+        this.props.navigation.navigate('ChangeInformation', {
+            status: status
+        });
     }
 
     renderHeader() {
@@ -120,7 +118,7 @@ class Information extends Component {
                     </View>
                     <View style = {styles.settingDetailWrapper}>
                         <Text style = {styles.textStyle}>Username</Text>
-                        <Text style = {{fontSize: 16, marginRight: 35}}>...username</Text>
+                        <Text style = {{fontSize: 16, marginRight: 35}}>{this.state.username}</Text>
                     </View>
                 </View>
                 <View style = {styles.secondWrapper}>
@@ -129,10 +127,10 @@ class Information extends Component {
                         <TouchableOpacity  
                             style = {styles.btnChangeAvt}
                             onPress = {() => {
-                                this.handleChangeFirstName();
+                                this.handleChangeInformation(1);
                             }}    
                         >
-                            <Text style = {styles.textStyle}>...FirstName</Text>
+                            <Text style = {styles.textStyle}>{this.state.first_name}</Text>
                             <Image
                                 style = {{height: 20, width: 20, marginLeft: 15}}
                                 source = {rightArrowIcon}
@@ -144,10 +142,10 @@ class Information extends Component {
                         <TouchableOpacity 
                             style = {styles.btnChangeAvt}
                             onPress = {() => {
-                                this.handleChangeEmail();
+                                this.handleChangeInformation(2);
                             }}  
                         >
-                            <Text style = {styles.textStyle}>...Email</Text>
+                            <Text style = {styles.textStyle}>{this.state.email}</Text>
                             <Image
                                 style = {{height: 20, width: 20, marginLeft: 15}}
                                 source = {rightArrowIcon}
