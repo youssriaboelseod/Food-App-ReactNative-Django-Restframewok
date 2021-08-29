@@ -31,7 +31,8 @@ class Information extends Component {
     }
 
     async getUserInformation() {
-
+        const token = AsyncStorage.getItem('token');
+        axios.get(`${ipAddress}/api/`)
     }
 
     componentDidMount() {

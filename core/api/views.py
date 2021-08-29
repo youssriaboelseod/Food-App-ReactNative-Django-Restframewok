@@ -234,5 +234,14 @@ class FavoriteProductsView(APIView):
         serializer = self.serializer_class(data, many = True)
         return Response(serializer.data, status = status.HTTP_200_OK)
             
+            
+class UserInformationView(APIView):
+    serializer_class = serializers.CustomerSerializer
+    permission_classes = [permissions.IsAuthenticated]
+    
+    def get(self, request, format = None):
+        userInstance = request.user
+        serializer = self.serializer_class(userInstance)
+        return Response(serializer.data, status = status.HTTP_200_OK)
         
     

@@ -10,6 +10,7 @@ urlpatterns = [
     path('order-detail/', views.OrderDetailView.as_view(), name = 'order-detail'),
     path('favorite/', views.FavoriteView.as_view(), name = 'favorite'),
     path('favorites/', views.FavoriteProductsView.as_view(), name = 'favorites'),
+    path('user/', views.UserInformationView.as_view(), name = 'user'),
     
     # authentication
     
